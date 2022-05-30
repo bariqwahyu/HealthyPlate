@@ -113,17 +113,4 @@
         app:layout_constraintStart_toEndOf="@+id/txt_loginRegDesc"
         app:layout_constraintTop_toTopOf="@+id/txt_loginRegDesc" />
 
-    <Button
-        android:id="@+id/btn_loginGoogle2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#4285F4"
-        android:drawableLeft="@drawable/common_google_signin_btn_icon_light"
-        android:text="@string/google_signUp"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="@+id/btn_register"
-        app:layout_constraintStart_toStartOf="@+id/btn_register"
-        app:layout_constraintTop_toBottomOf="@+id/txt_loginRegDesc" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
