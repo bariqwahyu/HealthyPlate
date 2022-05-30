@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "1035172633789-vetekgrsho2d0lovp5pgu9qhikthb3ql.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capstone.healthyplate",
+            "certificate_hash": "8d23cb3dcb50cb4cf51f82386ab7092a451d14ce"
+          }
+        },
+        {
           "client_id": "1035172633789-8soeinqv9198v6707nhml792ucbir1hp.apps.googleusercontent.com",
           "client_type": 3
         }
