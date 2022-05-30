@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1035172633789",
+    "project_id": "plasma-light-343814",
+    "storage_bucket": "plasma-light-343814.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035172633789:android:da074d1358cc03652debd4",
+        "android_client_info": {
+          "package_name": "com.capstone.healthyplate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035172633789-uc6v1ve1r7vhkelob6km922uc9iu3chs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capstone.healthyplate",
+            "certificate_hash": "4006629f667d2a4c35aba753d2f0517da838313e"
+          }
+        },
+        {
+          "client_id": "1035172633789-8soeinqv9198v6707nhml792ucbir1hp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChALWvcvILnpoAp7tkx--tixkY4VAkOMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035172633789-8soeinqv9198v6707nhml792ucbir1hp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
