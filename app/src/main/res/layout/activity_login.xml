@@ -83,4 +83,13 @@
         app:layout_constraintStart_toEndOf="@+id/txt_regLoginDesc"
         app:layout_constraintTop_toTopOf="@+id/txt_regLoginDesc" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="59dp"
+        tools:layout_editor_absoluteY="546dp"
+        android:drawableStart=""/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
