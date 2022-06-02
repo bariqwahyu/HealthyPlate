@@ -7,45 +7,6 @@
     android:background="#F2ECE1"
     tools:context=".CriteriaActivity">
 
-    <EditText
-        android:id="@+id/criteria1"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="64dp"
-        android:drawableStart="@drawable/ic_email_24dp"
-        android:drawablePadding="8dp"
-        android:ems="10"
-        android:hint="Criteria1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <EditText
-        android:id="@+id/criteria2"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_email_24dp"
-        android:drawablePadding="8dp"
-        android:ems="10"
-        android:hint="Criteria2"
-        app:layout_constraintEnd_toEndOf="@+id/criteria1"
-        app:layout_constraintStart_toStartOf="@+id/criteria1"
-        app:layout_constraintTop_toBottomOf="@+id/criteria1" />
-
-    <EditText
-        android:id="@+id/criteria3"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_email_24dp"
-        android:drawablePadding="8dp"
-        android:ems="10"
-        android:hint="Criteria3"
-        app:layout_constraintEnd_toEndOf="@+id/criteria2"
-        app:layout_constraintStart_toStartOf="@+id/criteria2"
-        app:layout_constraintTop_toBottomOf="@+id/criteria2" />
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
@@ -57,17 +18,82 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
+        android:id="@+id/btn_verification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/green1"
+        android:text="Verification"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <EditText
+        android:id="@+id/et_nameCr"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_email_24dp"
+        android:drawablePadding="8dp"
+        android:ems="10"
+        android:hint="@string/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_verification" />
+
+    <EditText
+        android:id="@+id/et_ageCr"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_email_24dp"
+        android:drawablePadding="8dp"
+        android:ems="10"
+        android:hint="@string/age"
+        app:layout_constraintEnd_toEndOf="@+id/et_nameCr"
+        app:layout_constraintStart_toStartOf="@+id/et_nameCr"
+        app:layout_constraintTop_toBottomOf="@+id/et_nameCr" />
+
+    <EditText
+        android:id="@+id/et_genderCr"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_email_24dp"
+        android:drawablePadding="8dp"
+        android:ems="10"
+        android:hint="@string/gender"
+        app:layout_constraintEnd_toEndOf="@+id/et_ageCr"
+        app:layout_constraintStart_toStartOf="@+id/et_ageCr"
+        app:layout_constraintTop_toBottomOf="@+id/et_ageCr" />
+
+    <EditText
+        android:id="@+id/et_jobCr"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_email_24dp"
+        android:drawablePadding="8dp"
+        android:ems="10"
+        android:hint="@string/job"
+        app:layout_constraintEnd_toEndOf="@+id/et_ageCr"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/et_ageCr"
+        app:layout_constraintTop_toBottomOf="@+id/et_genderCr" />
+
+    <Button
         android:id="@+id/btn_next"
         android:layout_width="280dp"
         android:layout_height="60dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/green1"
         android:fontFamily="@font/inter_bold"
         android:text="Next"
         android:textAllCaps="false"
         android:textSize="20sp"
         app:cornerRadius="30dp"
-        app:layout_constraintEnd_toEndOf="@+id/criteria3"
-        app:layout_constraintStart_toStartOf="@+id/criteria3"
-        app:layout_constraintTop_toBottomOf="@+id/criteria3" />
+        app:layout_constraintEnd_toEndOf="@+id/et_genderCr"
+        app:layout_constraintStart_toStartOf="@+id/et_genderCr"
+        app:layout_constraintTop_toBottomOf="@+id/et_jobCr" />
 </androidx.constraintlayout.widget.ConstraintLayout>

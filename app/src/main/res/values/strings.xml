@@ -8,6 +8,9 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="job">Job</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="have_an_account">Have an Account?</string>
     <string name="register">Register</string>
@@ -21,4 +24,8 @@
     <string name="logout">Logout</string>
     <string name="google_signIn">Sign in with Google</string>
     <string name="google_signUp">Sign up with Google</string>
+    <string name="name_account">Name : $s</string>
+    <string name="email_account">Email : $s</string>
+    <string name="age_account">Age : $d</string>
+    <string name="job_account">Job : $s</string>
 </resources>

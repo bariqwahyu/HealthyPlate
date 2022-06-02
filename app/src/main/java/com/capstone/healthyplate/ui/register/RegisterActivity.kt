@@ -25,14 +25,10 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.btnRegister.setOnClickListener {
-            val name = binding.etNameReg.text.toString()
             val email = binding.etEmailReg.text.toString()
             val password = binding.etPasswordReg.text.toString()
             val confirmPassword = binding.etConfirmPasswordReg.text.toString()
             when {
-                name.isEmpty() -> {
-                    binding.etNameReg.error = "Masukkan email"
-                }
                 email.isEmpty() -> {
                     binding.etEmailReg.error = "Masukkan email"
                 }
