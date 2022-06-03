@@ -17,14 +17,16 @@ class CriteriaActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-
+        setupAction()
     }
 
     private fun sendEmailVerification() {
+        //get instance of firebase auth
         val firebaseAuth = FirebaseAuth.getInstance()
+        //get current user
         val firebaseUser = firebaseAuth.currentUser
 
-
+        //send email verification
         firebaseUser!!.sendEmailVerification()
             .addOnSuccessListener {
                 Toast.makeText(this@CriteriaActivity, "Instructions Sent...", Toast.LENGTH_SHORT)
@@ -37,5 +39,31 @@ class CriteriaActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+    }
+
+    private fun setupAction() {
+        binding.btnVerification.setOnClickListener {
+            val name = binding.etNameCr.text.toString()
+            val age = binding.etAgeCr.text.toString()
+            val gender = binding.etGenderCr.text.toString()
+            val job = binding.etJobCr.text.toString()
+            when {
+                name.isEmpty() -> {
+                    binding.etNameCr.error = "Masukkan Nama"
+                }
+                age.isEmpty() -> {
+                    binding.etAgeCr.error = "Masukkan Umur"
+                }
+                gender.isEmpty() -> {
+                    binding.etGenderCr.error = "Masukkan Jenis Kelamin"
+                }
+                job.isEmpty() -> {
+                    binding.etJobCr.error = "Masukkan Pekerjaan Anda"
+                }
+                else -> {
+
+                }
+            }
+        }
     }
 }
