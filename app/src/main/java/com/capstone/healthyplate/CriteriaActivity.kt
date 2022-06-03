@@ -21,12 +21,9 @@ class CriteriaActivity : AppCompatActivity() {
     }
 
     private fun sendEmailVerification() {
-        //get instance of firebase auth
         val firebaseAuth = FirebaseAuth.getInstance()
-        //get current user
         val firebaseUser = firebaseAuth.currentUser
 
-        //send email verification
         firebaseUser!!.sendEmailVerification()
             .addOnSuccessListener {
                 Toast.makeText(this@CriteriaActivity, "Instructions Sent...", Toast.LENGTH_SHORT)
