@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.capstone.healthyplate.CriteriaActivity
 import com.capstone.healthyplate.R
 import com.capstone.healthyplate.databinding.ActivityLoginBinding
 import com.capstone.healthyplate.ui.main.MainActivity
@@ -64,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
                 else -> {
                     firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            startActivity(Intent(this, MainActivity::class.java))
+                            startActivity(Intent(this, CriteriaActivity::class.java))
                         } else {
                             Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
                         }
@@ -119,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null){
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            startActivity(Intent(this@LoginActivity, CriteriaActivity::class.java))
             finish()
         }
     }
