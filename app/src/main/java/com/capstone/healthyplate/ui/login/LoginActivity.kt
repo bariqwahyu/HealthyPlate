@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.capstone.healthyplate.CriteriaActivity
 import com.capstone.healthyplate.R
 import com.capstone.healthyplate.databinding.ActivityLoginBinding
-import com.capstone.healthyplate.ui.main.MainActivity
 import com.capstone.healthyplate.ui.register.RegisterActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -24,13 +23,15 @@ import com.google.firebase.auth.GoogleAuthProvider
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = FirebaseAuth.getInstance()
 
         val gso = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -39,15 +40,13 @@ class LoginActivity : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        firebaseAuth = FirebaseAuth.getInstance()
-
         setupAction()
     }
 
     override fun onStart() {
         super.onStart()
 
-        val currentUser = firebaseAuth.currentUser
+        val currentUser = auth.currentUser
         updateUI(currentUser)
     }
 
@@ -63,13 +62,7 @@ class LoginActivity : AppCompatActivity() {
                     binding.etPasswordLogin.error = "Masukkan password"
                 }
                 else -> {
-                    firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            startActivity(Intent(this, CriteriaActivity::class.java))
-                        } else {
-                            Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
-                        }
-                    }
+                    emailLogin(email, password)
                 }
             }
         }
@@ -80,6 +73,21 @@ class LoginActivity : AppCompatActivity() {
 
         binding.btnLoginGoogle.setOnClickListener {
             googleSignIn()
+        }
+    }
+
+    private fun emailLogin(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "signInWithEmail:success")
+                    val user = auth.currentUser
+                    updateUI(user)
+                } else {
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    updateUI(null)
+                }
         }
     }
 
@@ -105,11 +113,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        firebaseAuth.signInWithCredential(credential)
+        auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithCredential:success")
-                    val user = firebaseAuth.currentUser
+                    val user = auth.currentUser
                     updateUI(user)
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -118,8 +126,8 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun updateUI(currentUser: FirebaseUser?) {
-        if (currentUser != null){
+    private fun updateUI(user: FirebaseUser?) {
+        if (user != null){
             startActivity(Intent(this@LoginActivity, CriteriaActivity::class.java))
             finish()
         }

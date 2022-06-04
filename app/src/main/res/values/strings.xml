@@ -24,8 +24,9 @@
     <string name="logout">Logout</string>
     <string name="google_signIn">Sign in with Google</string>
     <string name="google_signUp">Sign up with Google</string>
-    <string name="name_account">Name : $s</string>
-    <string name="email_account">Email : $s</string>
-    <string name="age_account">Age : $d</string>
-    <string name="job_account">Job : $s</string>
+    <string name="name_account">Name : %1$s</string>
+    <string name="email_account">Email : %1$s</string>
+    <string name="age_account">Age : %1$s</string>
+    <string name="gender_account">Gender : %1$s</string>
+    <string name="job_account">Job : %1$s</string>
 </resources>

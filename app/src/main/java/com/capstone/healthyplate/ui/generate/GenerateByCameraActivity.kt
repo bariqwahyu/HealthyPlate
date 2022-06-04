@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.capstone.healthyplate.createTempFile
 import com.capstone.healthyplate.R
 import com.capstone.healthyplate.databinding.ActivityGenerateByCameraBinding
 import java.io.File
@@ -66,7 +67,7 @@ class GenerateByCameraActivity : AppCompatActivity() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.resolveActivity(packageManager)
 
-        com.capstone.healthyplate.createTempFile(application).also {
+        createTempFile(application).also{
             val photoURI: Uri = FileProvider.getUriForFile(
                 this@GenerateByCameraActivity,
                 "com.capstone.healthyplate",
