@@ -8,6 +8,9 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="job">Job</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="have_an_account">Have an Account?</string>
     <string name="register">Register</string>
@@ -19,4 +22,11 @@
     <string name="dont_have_account">Don\'t Have Account?</string>
     <string name="by_camera">by Camera</string>
     <string name="logout">Logout</string>
+    <string name="google_signIn">Sign in with Google</string>
+    <string name="google_signUp">Sign up with Google</string>
+    <string name="name_account">Name : %1$s</string>
+    <string name="email_account">Email : %1$s</string>
+    <string name="age_account">Age : %1$s</string>
+    <string name="gender_account">Gender : %1$s</string>
+    <string name="job_account">Job : %1$s</string>
 </resources>

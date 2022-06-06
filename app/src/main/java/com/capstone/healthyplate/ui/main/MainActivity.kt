@@ -21,11 +21,21 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        firebaseAuth = Firebase.auth
+        val firebaseUser = firebaseAuth.currentUser
+
+        if (firebaseUser == null) {
+            startActivity(Intent(this, WelcomeActivity::class.java))
+            finish()
+            return
+        }
 
         val navView: BottomNavigationView = binding.navView
 
@@ -50,11 +60,16 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.logout -> {
-                Firebase.auth.signOut()
-                startActivity(Intent(this, WelcomeActivity::class.java))
+                signOut()
                 true
             }
             else -> true
         }
+    }
+
+    private fun signOut() {
+        Firebase.auth.signOut()
+        startActivity(Intent(this, WelcomeActivity::class.java))
+        finish()
     }
 }

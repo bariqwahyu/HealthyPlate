@@ -1,20 +1,30 @@
 package com.capstone.healthyplate.ui.account
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.capstone.healthyplate.CriteriaActivity
+import com.capstone.healthyplate.R
 import com.capstone.healthyplate.databinding.FragmentAccountBinding
+import com.capstone.healthyplate.ui.main.MainActivity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class AccountFragment : Fragment() {
 
     private var _binding: FragmentAccountBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private val user = Firebase.auth.currentUser
+    private val userID = user?.uid
+    private val db = Firebase.firestore
+
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -22,22 +32,56 @@ class AccountFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
+        val accountViewModel =
             ViewModelProvider(this).get(AccountViewModel::class.java)
 
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.txtAccount
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        checkCriteria()
+
+//        val textView: TextView = binding.txtNameAccount
+//        accountViewModel.text.observe(viewLifecycleOwner) {
+//            textView.text = it
+//        }
 
         return root
+    }
+
+    private fun checkCriteria() {
+        val docRef = db.collection("users").document(userID.toString())
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val name = document.getString("name")
+                    val email = document.getString("email")
+                    val age = document.getString("age")
+                    val gender = document.getString("gender")
+                    val job = document.getString("job")
+                    binding.apply {
+                        txtNameAccount.text = resources.getString(R.string.name_account, name)
+                        txtEmailAccount.text = resources.getString(R.string.email_account, email)
+                        txtAgeAccount.text = resources.getString(R.string.age_account, age)
+                        txtGenderAccount.text = resources.getString(R.string.gender_account, gender)
+                        txtJobAccount.text = resources.getString(R.string.job_account, job)
+                    }
+
+                    Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+                } else {
+                    Log.d(TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val TAG = "AccountFragment"
     }
 }

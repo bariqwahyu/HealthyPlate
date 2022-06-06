@@ -83,4 +83,17 @@
         app:layout_constraintStart_toEndOf="@+id/txt_regLoginDesc"
         app:layout_constraintTop_toTopOf="@+id/txt_regLoginDesc" />
 
+    <Button
+        android:id="@+id/btn_loginGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#4285F4"
+        android:drawableLeft="@drawable/common_google_signin_btn_icon_light"
+        android:text="@string/google_signIn"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/btn_login"
+        app:layout_constraintStart_toStartOf="@+id/btn_login"
+        app:layout_constraintTop_toBottomOf="@+id/txt_regLoginDesc" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
