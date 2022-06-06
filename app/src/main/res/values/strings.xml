@@ -29,4 +29,6 @@
     <string name="age_account">Age : %1$s</string>
     <string name="gender_account">Gender : %1$s</string>
     <string name="job_account">Job : %1$s</string>
+    <string name="name_recipe">Recipe Name</string>
+    <string name="recipe_step">Step for This Recipe</string>
 </resources>

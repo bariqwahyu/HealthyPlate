@@ -53,13 +53,6 @@ class CriteriaActivity : AppCompatActivity() {
                     val job = document.getString("job")
                     if (email != null && name != null && age != null && gender != null && job != null) {
                         startActivity(Intent(this, MainActivity::class.java))
-                    } else {
-                        binding.apply {
-                            etNameCr.setText(name)
-                            etAgeCr.setText(age)
-                            etGenderCr.setText(gender)
-                            etJobCr.setText(job)
-                        }
                     }
                     Log.d(TAG, "DocumentSnapshot data: ${document.data}")
                 } else {
