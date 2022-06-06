@@ -1,6 +1,8 @@
 package com.capstone.healthyplate
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -13,6 +15,7 @@ import com.capstone.healthyplate.ui.welcome.WelcomeActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.io.ByteArrayOutputStream
 
 class CriteriaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCriteriaBinding
@@ -79,6 +82,7 @@ class CriteriaActivity : AppCompatActivity() {
         }
     }
 
+
     private fun getUserDataFromProvider() {
         user?.let {
             for (profile in it.providerData) {
@@ -95,12 +99,16 @@ class CriteriaActivity : AppCompatActivity() {
     }
 
     private fun addData() {
+        val avatar = binding.imageView2.drawable.toString()
         val email = user?.email.toString()
         val name = binding.etNameCr.text.toString()
         val age = binding.etAgeCr.text.toString()
         val gender = binding.etGenderCr.text.toString()
         val job = binding.etJobCr.text.toString()
         when {
+            avatar.isEmpty() -> {
+                binding.imageView2.drawable
+            }
             name.isEmpty() -> {
                 binding.etNameCr.error = "Masukkan Nama"
             }
@@ -114,9 +122,18 @@ class CriteriaActivity : AppCompatActivity() {
                 binding.etJobCr.error = "Masukkan Pekerjaan Anda"
             }
             else -> {
-                uploadData(email, name, age, gender, job)
+                uploadData(avatar, email, name, age, gender, job)
             }
         }
+    }
+
+    private fun getDataPhoto(){
+        imageView.isDrawingCacheEnabled = true
+        imageView.buildDrawingCache()
+        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
     }
 
     private fun uploadData(email: String, name: String, age: String, gender: String, job: String) {
