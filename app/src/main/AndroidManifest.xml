@@ -29,6 +29,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Healthyplate">
         <activity
+            android:name=".DetailRecipeActivity"
+            android:exported="false" />
+        <activity
             android:name=".CriteriaActivity"
             android:exported="false" />
         <activity

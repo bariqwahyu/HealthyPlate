@@ -3,6 +3,7 @@ package com.capstone.healthyplate.ui.generate
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ class GenerateByCameraActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGenerateByCameraBinding
     private lateinit var currentPhotoPath: String
+    private lateinit var imgBitmap: Bitmap
     private var getFile: File? = null
 
     override fun onRequestPermissionsResult(
@@ -86,9 +88,50 @@ class GenerateByCameraActivity : AppCompatActivity() {
             val myFile = File(currentPhotoPath)
             getFile = myFile
 
-            val result = BitmapFactory.decodeFile(getFile?.path)
-            binding.imgPreview.setImageBitmap(result)
+            imgBitmap = BitmapFactory.decodeFile(getFile?.path)
+            binding.imgPreview.setImageBitmap(imgBitmap)
         }
+    }
+
+    private fun buildModel() {
+
+        val inputLabel = application.assets.open("labels.txt").bufferedReader().use { it.readText() }
+        var itemList = inputLabel.split("\n")
+
+        var imgResized: Bitmap = Bitmap.createScaledBitmap(imgBitmap, 300, 300, true)
+
+//        val model = Modelke2.newInstance(this)
+//
+//        // Creates inputs for reference.
+//        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
+//        var tfImage = TensorImage.fromBitmap(imgResized)
+//        var byteBuffer = tfImage.buffer
+//        inputFeature0.loadBuffer(byteBuffer)
+//
+//        // Runs model inference and gets result.
+//        val outputs = model.process(inputFeature0)
+//        val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+//
+//        // Releases model resources if no longer used.
+//        model.close()
+//
+//        var result = outputFeature0.floatArray
+//
+//        var maxResult = getMax(result)
+//        binding.txtIdentifyResult.text = itemList[maxResult]
+
+    }
+
+    fun getMax(label:  FloatArray): Int{
+        var index = 0
+        var min = 0.5f
+        for(i in label.indices){
+            if(label[i] > min){
+                min = label[i]
+                index = i
+            }
+        }
+        return index
     }
 
     companion object {

@@ -8,14 +8,13 @@
     tools:context=".CriteriaActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:id="@+id/img_profileCr"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_verification"
@@ -27,7 +26,7 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/img_profileCr" />
 
     <EditText
         android:id="@+id/et_nameCr"
@@ -51,6 +50,7 @@
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/age"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="@+id/et_nameCr"
         app:layout_constraintStart_toStartOf="@+id/et_nameCr"
         app:layout_constraintTop_toBottomOf="@+id/et_nameCr" />

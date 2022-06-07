@@ -1,21 +1,20 @@
 package com.capstone.healthyplate.ui.account
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.capstone.healthyplate.CriteriaActivity
+import com.bumptech.glide.Glide
 import com.capstone.healthyplate.R
 import com.capstone.healthyplate.databinding.FragmentAccountBinding
-import com.capstone.healthyplate.ui.main.MainActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.io.File
 
 class AccountFragment : Fragment() {
 
@@ -24,6 +23,8 @@ class AccountFragment : Fragment() {
     private val user = Firebase.auth.currentUser
     private val userID = user?.uid
     private val db = Firebase.firestore
+    private var storage = Firebase.storage
+    private val storageRef = storage.reference
 
     private val binding get() = _binding!!
 
@@ -38,17 +39,12 @@ class AccountFragment : Fragment() {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        checkCriteria()
-
-//        val textView: TextView = binding.txtNameAccount
-//        accountViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
+        getData()
 
         return root
     }
 
-    private fun checkCriteria() {
+    private fun getData() {
         val docRef = db.collection("users").document(userID.toString())
         docRef.get()
             .addOnSuccessListener { document ->
@@ -65,7 +61,7 @@ class AccountFragment : Fragment() {
                         txtGenderAccount.text = resources.getString(R.string.gender_account, gender)
                         txtJobAccount.text = resources.getString(R.string.job_account, job)
                     }
-
+                    getProfilePic()
                     Log.d(TAG, "DocumentSnapshot data: ${document.data}")
                 } else {
                     Log.d(TAG, "No such document")
@@ -74,6 +70,14 @@ class AccountFragment : Fragment() {
             .addOnFailureListener { exception ->
                 Log.d(TAG, "get failed with ", exception)
             }
+    }
+
+    private fun getProfilePic() {
+        storageRef.child("profile_picture/${userID.toString()}.png").downloadUrl.addOnSuccessListener { url ->
+            Glide.with(this)
+                .load(url)
+                .into(binding.imgProfileCr)
+        }
     }
 
     override fun onDestroyView() {
