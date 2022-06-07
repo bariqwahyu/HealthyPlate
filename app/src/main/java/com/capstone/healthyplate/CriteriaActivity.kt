@@ -9,12 +9,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.capstone.healthyplate.databinding.ActivityCriteriaBinding
 import com.capstone.healthyplate.ui.main.MainActivity
 import com.capstone.healthyplate.ui.welcome.WelcomeActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
 
 class CriteriaActivity : AppCompatActivity() {
@@ -22,6 +24,8 @@ class CriteriaActivity : AppCompatActivity() {
     private val user = Firebase.auth.currentUser
     private val userID = user?.uid
     private val db = Firebase.firestore
+    private val storage = Firebase.storage
+    private val storageRef = storage.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,22 +49,34 @@ class CriteriaActivity : AppCompatActivity() {
     }
 
     private fun checkCriteria() {
-        val docRef = db.collection("users").document(userID.toString())
-        docRef.get()
+        val usersRef = db.collection("users").document(userID.toString())
+        usersRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
+                    val imgView = binding.imgProfileCr
                     val email = document.getString("email")
                     val name = document.getString("name")
                     val age = document.getString("age")
                     val gender = document.getString("gender")
                     val job = document.getString("job")
                     if (email != null && name != null && age != null && gender != null && job != null) {
-                        startActivity(Intent(this, MainActivity::class.java))
+                        getProfilePic()
+                        if (imgView.drawable == null){
+                            Glide.with(this)
+                                .load(R.drawable.blank_profile)
+                                .into(binding.imgProfileCr)
+                            binding.apply {
+                                etNameCr.setText(name)
+                                etAgeCr.setText(age)
+                                etGenderCr.setText(gender)
+                                etJobCr.setText(job)
+                            }
+                        } else {
+                            startActivity(Intent(this, MainActivity::class.java))
+                        }
                     }
                     Log.d(TAG, "DocumentSnapshot data: ${document.data}")
                 } else {
-                    getUserData()
-                    getUserDataFromProvider()
                     Log.d(TAG, "No such document")
                 }
             }
@@ -69,46 +85,23 @@ class CriteriaActivity : AppCompatActivity() {
             }
     }
 
-    private fun getUserData() {
-        user?.let {
-            val name = user.displayName
-            val email = user.email
-            val photoUrl = user.photoUrl
-            val emailVerified = user.isEmailVerified
-            val uid = user.uid
-            if (name != null) {
-                binding.etNameCr.setText(name)
-            }
-        }
-    }
-
-
-    private fun getUserDataFromProvider() {
-        user?.let {
-            for (profile in it.providerData) {
-                val providerId = profile.providerId
-                val uid = profile.uid
-                val name = profile.displayName
-                val email = profile.email
-                val photoUrl = profile.photoUrl
-                if (name != null) {
-                    binding.etNameCr.setText(name)
-                }
-            }
+    private fun getProfilePic() {
+        storageRef.child("profile_picture/${userID.toString()}.png").downloadUrl.addOnSuccessListener { url ->
+            Glide.with(this)
+                .load(url)
+                .into(binding.imgProfileCr)
+        }.addOnFailureListener {
+            Log.d(TAG, "Get ProfPic : " + it.message.toString())
         }
     }
 
     private fun addData() {
-        val avatar = binding.imageView2.drawable.toString()
         val email = user?.email.toString()
         val name = binding.etNameCr.text.toString()
         val age = binding.etAgeCr.text.toString()
         val gender = binding.etGenderCr.text.toString()
         val job = binding.etJobCr.text.toString()
         when {
-            avatar.isEmpty() -> {
-                binding.imageView2.drawable
-            }
             name.isEmpty() -> {
                 binding.etNameCr.error = "Masukkan Nama"
             }
@@ -122,18 +115,27 @@ class CriteriaActivity : AppCompatActivity() {
                 binding.etJobCr.error = "Masukkan Pekerjaan Anda"
             }
             else -> {
-                uploadData(avatar, email, name, age, gender, job)
+                uploadProfilePicture()
+                uploadData(email, name, age, gender, job)
             }
         }
     }
 
-    private fun getDataPhoto(){
+    private fun uploadProfilePicture(){
+        val profilePicRef = storageRef.child("profile_picture/${userID.toString()}.png")
+        val imageView = binding.imgProfileCr
         imageView.isDrawingCacheEnabled = true
         imageView.buildDrawingCache()
         val bitmap = (imageView.drawable as BitmapDrawable).bitmap
         val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
         val data = baos.toByteArray()
+        val uploadTask = profilePicRef.putBytes(data)
+        uploadTask.addOnFailureListener {
+            Toast.makeText(this, "Upload Failed",Toast.LENGTH_SHORT).show()
+        }.addOnSuccessListener {
+            Toast.makeText(this, "Image Uploaded",Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun uploadData(email: String, name: String, age: String, gender: String, job: String) {

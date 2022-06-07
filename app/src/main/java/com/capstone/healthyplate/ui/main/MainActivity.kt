@@ -13,7 +13,6 @@ import com.capstone.healthyplate.R
 import com.capstone.healthyplate.databinding.ActivityMainBinding
 import com.capstone.healthyplate.ui.welcome.WelcomeActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -21,17 +20,14 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var firebaseAuth: FirebaseAuth
+    private val user = Firebase.auth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        firebaseAuth = Firebase.auth
-        val firebaseUser = firebaseAuth.currentUser
-
-        if (firebaseUser == null) {
+        if (user == null) {
             startActivity(Intent(this, WelcomeActivity::class.java))
             finish()
             return
@@ -71,5 +67,9 @@ class MainActivity : AppCompatActivity() {
         Firebase.auth.signOut()
         startActivity(Intent(this, WelcomeActivity::class.java))
         finish()
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
     }
 }
