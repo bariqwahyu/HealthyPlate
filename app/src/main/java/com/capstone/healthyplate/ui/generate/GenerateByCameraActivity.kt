@@ -139,8 +139,8 @@ class GenerateByCameraActivity : AppCompatActivity() {
                 val modelFile = model?.file
                 if (modelFile != null) {
                     interpreter = Interpreter(modelFile)
+                    Log.d("Model : ", modelFile.name)
                 }
-                Log.d("Model", model?.name.toString())
             }
     }
 
@@ -151,10 +151,10 @@ class GenerateByCameraActivity : AppCompatActivity() {
 //
 //        var imgResized: Bitmap = Bitmap.createScaledBitmap(imgBitmap, 300, 300, true)
 
-        val bitmap = Bitmap.createScaledBitmap(imgBitmap, 224, 224, true)
-        val input = ByteBuffer.allocateDirect(224*224*3*4).order(ByteOrder.nativeOrder())
-        for (y in 0 until 224) {
-            for (x in 0 until 224) {
+        val bitmap = Bitmap.createScaledBitmap(imgBitmap, 300, 300, true)
+        val input = ByteBuffer.allocateDirect(150*150*3*4).order(ByteOrder.nativeOrder())
+        for (y in 0 until 149) {
+            for (x in 0 until 149) {
                 val px = bitmap.getPixel(x, y)
 
                 // Get channel values from the pixel value.
@@ -175,7 +175,7 @@ class GenerateByCameraActivity : AppCompatActivity() {
             }
         }
 
-        val bufferSize = 1000 * java.lang.Float.SIZE / java.lang.Byte.SIZE
+        val bufferSize = 22 * java.lang.Float.SIZE / java.lang.Byte.SIZE
         val modelOutput = ByteBuffer.allocateDirect(bufferSize).order(ByteOrder.nativeOrder())
         interpreter.run(input, modelOutput)
 
@@ -183,8 +183,9 @@ class GenerateByCameraActivity : AppCompatActivity() {
         val probabilities = modelOutput.asFloatBuffer()
         try {
             val reader = BufferedReader(
-                InputStreamReader(assets.open("labels.txt"))
+                InputStreamReader(application.assets.open("labels.txt"))
             )
+            Log.d("Prob Cap : ",probabilities.capacity().toString())
             for (i in 0..probabilities.capacity()) {
                 val label: String = reader.readLine()
                 val probability = probabilities.get(i)

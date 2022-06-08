@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.capstone.healthyplate.databinding.ActivityCriteriaBinding
+import com.capstone.healthyplate.ui.generate.GenerateByCameraActivity
 import com.capstone.healthyplate.ui.main.MainActivity
 import com.capstone.healthyplate.ui.welcome.WelcomeActivity
 import com.google.firebase.auth.ktx.auth
@@ -67,20 +68,21 @@ class CriteriaActivity : AppCompatActivity() {
                     val gender = document.getString("gender")
                     val job = document.getString("job")
                     if (email != null && name != null && age != null && gender != null && job != null) {
-                        getProfilePic()
-                        if (imgView.drawable == null){
-                            Glide.with(this)
-                                .load(R.drawable.blank_profile)
-                                .into(binding.imgProfileCr)
-                            binding.apply {
-                                etNameCr.setText(name)
-                                etAgeCr.setText(age)
-                                etGenderCr.setText(gender)
-                                etJobCr.setText(job)
-                            }
-                        } else {
-                            startActivity(Intent(this, MainActivity::class.java))
-                        }
+//                        getProfilePic()
+//                        if (imgView.drawable == null){
+//                            Glide.with(this)
+//                                .load(R.drawable.blank_profile)
+//                                .into(binding.imgProfileCr)
+//                            binding.apply {
+//                                etNameCr.setText(name)
+//                                etAgeCr.setText(age)
+//                                etGenderCr.setText(gender)
+//                                etJobCr.setText(job)
+//                            }
+//                        } else {
+//                            startActivity(Intent(this, MainActivity::class.java))
+//                        }
+                        startActivity(Intent(this, MainActivity::class.java))
                     }
                     Log.d(TAG, "DocumentSnapshot data: ${document.data}")
                 } else {
