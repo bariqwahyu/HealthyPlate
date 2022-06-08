@@ -5,10 +5,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -17,13 +19,24 @@ import androidx.core.content.FileProvider
 import com.capstone.healthyplate.createTempFile
 import com.capstone.healthyplate.R
 import com.capstone.healthyplate.databinding.ActivityGenerateByCameraBinding
+import com.google.firebase.ml.modeldownloader.CustomModel
+import com.google.firebase.ml.modeldownloader.CustomModelDownloadConditions
+import com.google.firebase.ml.modeldownloader.DownloadType
+import com.google.firebase.ml.modeldownloader.FirebaseModelDownloader
+import org.tensorflow.lite.Interpreter
+import java.io.BufferedReader
 import java.io.File
+import java.io.IOException
+import java.io.InputStreamReader
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
 class GenerateByCameraActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGenerateByCameraBinding
     private lateinit var currentPhotoPath: String
     private lateinit var imgBitmap: Bitmap
+    private lateinit var interpreter: Interpreter
     private var getFile: File? = null
 
     override fun onRequestPermissionsResult(
@@ -61,8 +74,25 @@ class GenerateByCameraActivity : AppCompatActivity() {
             )
         }
 
+        model()
+
         this.title = resources.getString(R.string.app_nameGenerate)
-        binding.imgBtnCamera.setOnClickListener { startTakePhoto() }
+        binding.imgBtnCamera.setOnClickListener { selectImage() }
+        binding.btnIdentify.setOnClickListener { buildModel() }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        binding.imgPreview.setImageURI(data?.data)
+        var uri: Uri? = data?.data
+        imgBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
+    }
+
+    private fun selectImage() {
+        val selectImage = Intent(Intent.ACTION_GET_CONTENT)
+        selectImage.type = "image/*"
+        startActivityForResult(selectImage, 100)
     }
 
     private fun startTakePhoto() {
@@ -93,33 +123,77 @@ class GenerateByCameraActivity : AppCompatActivity() {
         }
     }
 
+    private fun model() {
+        val conditions = CustomModelDownloadConditions.Builder()
+            .requireWifi()
+            .build()
+        FirebaseModelDownloader.getInstance()
+            .getModel("Ingredient-Detector", DownloadType.LOCAL_MODEL_UPDATE_IN_BACKGROUND,
+                conditions)
+            .addOnSuccessListener { model: CustomModel? ->
+                // Download complete. Depending on your app, you could enable the ML
+                // feature, or switch from the local model to the remote model, etc.
+
+                // The CustomModel object contains the local path of the model file,
+                // which you can use to instantiate a TensorFlow Lite interpreter.
+                val modelFile = model?.file
+                if (modelFile != null) {
+                    interpreter = Interpreter(modelFile)
+                }
+                Log.d("Model", model?.name.toString())
+            }
+    }
+
     private fun buildModel() {
 
-        val inputLabel = application.assets.open("labels.txt").bufferedReader().use { it.readText() }
-        var itemList = inputLabel.split("\n")
+//        val inputLabel = application.assets.open("labels.txt").bufferedReader().use { it.readText() }
+//        var itemList = inputLabel.split("\n")
+//
+//        var imgResized: Bitmap = Bitmap.createScaledBitmap(imgBitmap, 300, 300, true)
 
-        var imgResized: Bitmap = Bitmap.createScaledBitmap(imgBitmap, 300, 300, true)
+        val bitmap = Bitmap.createScaledBitmap(imgBitmap, 224, 224, true)
+        val input = ByteBuffer.allocateDirect(224*224*3*4).order(ByteOrder.nativeOrder())
+        for (y in 0 until 224) {
+            for (x in 0 until 224) {
+                val px = bitmap.getPixel(x, y)
 
-//        val model = Modelke2.newInstance(this)
-//
-//        // Creates inputs for reference.
-//        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
-//        var tfImage = TensorImage.fromBitmap(imgResized)
-//        var byteBuffer = tfImage.buffer
-//        inputFeature0.loadBuffer(byteBuffer)
-//
-//        // Runs model inference and gets result.
-//        val outputs = model.process(inputFeature0)
-//        val outputFeature0 = outputs.outputFeature0AsTensorBuffer
-//
-//        // Releases model resources if no longer used.
-//        model.close()
-//
-//        var result = outputFeature0.floatArray
-//
-//        var maxResult = getMax(result)
-//        binding.txtIdentifyResult.text = itemList[maxResult]
+                // Get channel values from the pixel value.
+                val r = Color.red(px)
+                val g = Color.green(px)
+                val b = Color.blue(px)
 
+                // Normalize channel values to [-1.0, 1.0]. This requirement depends on the model.
+                // For example, some models might require values to be normalized to the range
+                // [0.0, 1.0] instead.
+                val rf = (r - 127) / 255f
+                val gf = (g - 127) / 255f
+                val bf = (b - 127) / 255f
+
+                input.putFloat(rf)
+                input.putFloat(gf)
+                input.putFloat(bf)
+            }
+        }
+
+        val bufferSize = 1000 * java.lang.Float.SIZE / java.lang.Byte.SIZE
+        val modelOutput = ByteBuffer.allocateDirect(bufferSize).order(ByteOrder.nativeOrder())
+        interpreter.run(input, modelOutput)
+
+        modelOutput.rewind()
+        val probabilities = modelOutput.asFloatBuffer()
+        try {
+            val reader = BufferedReader(
+                InputStreamReader(assets.open("labels.txt"))
+            )
+            for (i in 0..probabilities.capacity()) {
+                val label: String = reader.readLine()
+                val probability = probabilities.get(i)
+                binding.txtIdentifyResult.setText(probability.toString())
+                println("$label: $probability")
+            }
+        } catch (e: IOException) {
+            // File not found?
+        }
     }
 
     fun getMax(label:  FloatArray): Int{

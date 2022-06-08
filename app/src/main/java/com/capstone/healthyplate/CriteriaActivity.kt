@@ -38,14 +38,21 @@ class CriteriaActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendEmailVerification() {
-        user!!.sendEmailVerification()
-            .addOnSuccessListener {
-                Toast.makeText(this@CriteriaActivity, "Instructions Sent...", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this@CriteriaActivity, "Failed to send due to " + e.message, Toast.LENGTH_SHORT).show()
-            }
+    private fun emailVerification() {
+        if (user!!.isEmailVerified()) {
+            //enabledET()
+            Toast.makeText(this, "User is verified...", Toast.LENGTH_SHORT).show()
+        } else {
+            //disabledET()
+            user.sendEmailVerification()
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Instructions Sent...", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed to send due to " + e.message, Toast.LENGTH_SHORT).show()
+                }
+            Toast.makeText(this, "User isn't verified...", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun checkCriteria() {
