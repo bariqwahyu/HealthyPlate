@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.healthyplate.R
 
-class HomeAdapter (private val homeList : ArrayList<Home>) : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
+class HomeAdapter(private val homeList : ArrayList<Home>) : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
 
 
 

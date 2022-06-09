@@ -22,8 +22,6 @@ class AccountFragment : Fragment() {
     private val user = Firebase.auth.currentUser
     private val userID = user?.uid
     private val db = Firebase.firestore
-    private var storage = Firebase.storage
-    private val storageRef = storage.reference
 
     private val binding get() = _binding!!
 
@@ -48,19 +46,23 @@ class AccountFragment : Fragment() {
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
+                    val imageUri = document.getString("image_url")
                     val name = document.getString("name")
                     val email = document.getString("email")
-                    val age = document.getString("age")
+                    val age = document.get("age")
                     val gender = document.getString("gender")
                     val job = document.getString("job")
+                    Glide.with(this)
+                        .load(imageUri)
+                        .circleCrop()
+                        .into(binding.imgProfileCr)
                     binding.apply {
                         txtNameAccount.text = resources.getString(R.string.name_account, name)
                         txtEmailAccount.text = resources.getString(R.string.email_account, email)
-                        txtAgeAccount.text = resources.getString(R.string.age_account, age)
+                        txtAgeAccount.text = resources.getString(R.string.age_account, age.toString())
                         txtGenderAccount.text = resources.getString(R.string.gender_account, gender)
                         txtJobAccount.text = resources.getString(R.string.job_account, job)
                     }
-                    getProfilePic()
                     Log.d(TAG, "DocumentSnapshot data: ${document.data}")
                 } else {
                     Log.d(TAG, "No such document")
@@ -69,14 +71,6 @@ class AccountFragment : Fragment() {
             .addOnFailureListener { exception ->
                 Log.d(TAG, "get failed with ", exception)
             }
-    }
-
-    private fun getProfilePic() {
-        storageRef.child("profile_picture/${userID.toString()}.png").downloadUrl.addOnSuccessListener { url ->
-            Glide.with(this)
-                .load(url)
-                .into(binding.imgProfileCr)
-        }
     }
 
     override fun onDestroyView() {

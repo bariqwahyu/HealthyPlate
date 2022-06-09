@@ -49,6 +49,7 @@ class RegisterActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 Log.d(TAG, "createUserWithEmail:success")
                                 startActivity(Intent(this, LoginActivity::class.java))
+                                finish()
                             } else {
                                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
                                 Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
@@ -60,6 +61,7 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.txtLoginReg.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 

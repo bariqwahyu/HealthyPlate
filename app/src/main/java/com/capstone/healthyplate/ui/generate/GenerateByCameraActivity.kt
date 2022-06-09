@@ -1,6 +1,7 @@
 package com.capstone.healthyplate.ui.generate
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -23,6 +24,14 @@ import com.google.firebase.ml.modeldownloader.CustomModel
 import com.google.firebase.ml.modeldownloader.CustomModelDownloadConditions
 import com.google.firebase.ml.modeldownloader.DownloadType
 import com.google.firebase.ml.modeldownloader.FirebaseModelDownloader
+import com.google.mlkit.common.model.CustomRemoteModel
+import com.google.mlkit.common.model.DownloadConditions
+import com.google.mlkit.common.model.RemoteModelManager
+import com.google.mlkit.linkfirebase.FirebaseModelSource
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.objects.DetectedObject
+import com.google.mlkit.vision.objects.ObjectDetection
+import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions
 import org.tensorflow.lite.Interpreter
 import java.io.BufferedReader
 import java.io.File
@@ -37,7 +46,9 @@ class GenerateByCameraActivity : AppCompatActivity() {
     private lateinit var currentPhotoPath: String
     private lateinit var imgBitmap: Bitmap
     private lateinit var interpreter: Interpreter
+    private lateinit var inputImage: InputImage
     private var getFile: File? = null
+    private var getUri: Uri? = null
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -74,11 +85,9 @@ class GenerateByCameraActivity : AppCompatActivity() {
             )
         }
 
-        model()
-
         this.title = resources.getString(R.string.app_nameGenerate)
+        model()
         binding.imgBtnCamera.setOnClickListener { selectImage() }
-        binding.btnIdentify.setOnClickListener { buildModel() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -87,6 +96,7 @@ class GenerateByCameraActivity : AppCompatActivity() {
         binding.imgPreview.setImageURI(data?.data)
         var uri: Uri? = data?.data
         imgBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
+        //inputImage = InputImage.fromFilePath(this, uri!!)
     }
 
     private fun selectImage() {
@@ -128,7 +138,7 @@ class GenerateByCameraActivity : AppCompatActivity() {
             .requireWifi()
             .build()
         FirebaseModelDownloader.getInstance()
-            .getModel("Ingredient-Detector", DownloadType.LOCAL_MODEL_UPDATE_IN_BACKGROUND,
+            .getModel("Test-Model", DownloadType.LOCAL_MODEL_UPDATE_IN_BACKGROUND,
                 conditions)
             .addOnSuccessListener { model: CustomModel? ->
                 // Download complete. Depending on your app, you could enable the ML
@@ -138,13 +148,14 @@ class GenerateByCameraActivity : AppCompatActivity() {
                 // which you can use to instantiate a TensorFlow Lite interpreter.
                 val modelFile = model?.file
                 if (modelFile != null) {
-                    interpreter = Interpreter(modelFile)
                     Log.d("Model : ", modelFile.name)
+                    interpreter = Interpreter(modelFile)
+                    binding.btnIdentify.setOnClickListener { buildModel(interpreter) }
                 }
             }
     }
 
-    private fun buildModel() {
+    private fun buildModel(interpreter: Interpreter) {
 
 //        val inputLabel = application.assets.open("labels.txt").bufferedReader().use { it.readText() }
 //        var itemList = inputLabel.split("\n")
@@ -153,8 +164,8 @@ class GenerateByCameraActivity : AppCompatActivity() {
 
         val bitmap = Bitmap.createScaledBitmap(imgBitmap, 300, 300, true)
         val input = ByteBuffer.allocateDirect(150*150*3*4).order(ByteOrder.nativeOrder())
-        for (y in 0 until 149) {
-            for (x in 0 until 149) {
+        for (y in 0 until 150) {
+            for (x in 0 until 150) {
                 val px = bitmap.getPixel(x, y)
 
                 // Get channel values from the pixel value.
@@ -185,12 +196,10 @@ class GenerateByCameraActivity : AppCompatActivity() {
             val reader = BufferedReader(
                 InputStreamReader(application.assets.open("labels.txt"))
             )
-            Log.d("Prob Cap : ",probabilities.capacity().toString())
-            for (i in 0..probabilities.capacity()) {
+            for (i in 0..21) {
                 val label: String = reader.readLine()
                 val probability = probabilities.get(i)
-                binding.txtIdentifyResult.setText(probability.toString())
-                println("$label: $probability")
+                println("$label : $probability")
             }
         } catch (e: IOException) {
             // File not found?
@@ -212,5 +221,6 @@ class GenerateByCameraActivity : AppCompatActivity() {
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
+        private const val TAG = "MLKit"
     }
 }

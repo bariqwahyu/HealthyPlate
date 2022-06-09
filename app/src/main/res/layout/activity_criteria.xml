@@ -14,14 +14,15 @@
         android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/btn_verification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/black"
+        android:drawablePadding="8dp"
         android:text="Verification"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +34,6 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_email_24dp"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/name"
@@ -46,7 +46,6 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_email_24dp"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/age"
@@ -56,31 +55,17 @@
         app:layout_constraintTop_toBottomOf="@+id/et_nameCr" />
 
     <EditText
-        android:id="@+id/et_genderCr"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_email_24dp"
-        android:drawablePadding="8dp"
-        android:ems="10"
-        android:hint="@string/gender"
-        app:layout_constraintEnd_toEndOf="@+id/et_ageCr"
-        app:layout_constraintStart_toStartOf="@+id/et_ageCr"
-        app:layout_constraintTop_toBottomOf="@+id/et_ageCr" />
-
-    <EditText
         android:id="@+id/et_jobCr"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_email_24dp"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/job"
         app:layout_constraintEnd_toEndOf="@+id/et_ageCr"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/et_ageCr"
-        app:layout_constraintTop_toBottomOf="@+id/et_genderCr" />
+        app:layout_constraintTop_toBottomOf="@+id/sp_gender" />
 
     <Button
         android:id="@+id/btn_next"
@@ -93,7 +78,18 @@
         android:textAllCaps="false"
         android:textSize="20sp"
         app:cornerRadius="30dp"
-        app:layout_constraintEnd_toEndOf="@+id/et_genderCr"
-        app:layout_constraintStart_toStartOf="@+id/et_genderCr"
+        app:layout_constraintEnd_toEndOf="@+id/et_jobCr"
+        app:layout_constraintStart_toStartOf="@+id/et_jobCr"
         app:layout_constraintTop_toBottomOf="@+id/et_jobCr" />
+
+    <Spinner
+        android:id="@+id/sp_gender"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:entries="@array/gender"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="@+id/et_ageCr"
+        app:layout_constraintStart_toStartOf="@+id/et_ageCr"
+        app:layout_constraintTop_toBottomOf="@+id/et_ageCr" />
 </androidx.constraintlayout.widget.ConstraintLayout>

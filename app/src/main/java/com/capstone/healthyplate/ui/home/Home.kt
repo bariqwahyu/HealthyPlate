@@ -5,4 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
-data class Home (var ingredients : String ?=null) : Parcelable
+data class Home (
+    var ingredients : String ?=null
+) : Parcelable

@@ -1,6 +1,7 @@
 package com.capstone.healthyplate.ui.login
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -52,42 +53,77 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.btnLogin.setOnClickListener {
-            val email = binding.etEmailLogin.text.toString()
-            val password = binding.etPasswordLogin.text.toString()
-            when {
-                email.isEmpty() -> {
-                    binding.etEmailLogin.error = "Masukkan email"
-                }
-                password.isEmpty() -> {
-                    binding.etPasswordLogin.error = "Masukkan password"
-                }
-                else -> {
-                    emailLogin(email, password)
-                }
-            }
+            emailLogin()
         }
 
         binding.txtRegLogin.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            finish()
         }
 
         binding.btnLoginGoogle.setOnClickListener {
             googleSignIn()
         }
+
+        binding.txtForgotLogin.setOnClickListener {
+            forgotPassword()
+        }
     }
 
-    private fun emailLogin(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "signInWithEmail:success")
-                    val user = auth.currentUser
-                    updateUI(user)
-                } else {
-                    Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
-                    updateUI(null)
-                }
+    private fun forgotPassword() {
+        val emailAddress = binding.etEmailLogin.text.toString()
+
+        if (emailAddress.isEmpty()) {
+            binding.etEmailLogin.error = "Input Your Email"
+        } else {
+            val builder = AlertDialog.Builder(this)
+
+            builder.setTitle("Reset Password")
+
+            builder.setMessage("Send Reset Password Email to $emailAddress")
+
+            builder.setPositiveButton(
+                "Yes") { dialog, id ->
+                auth.sendPasswordResetEmail(emailAddress)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.d(TAG, "Email sent.")
+                        }
+                    }
+            }
+
+            builder.setNegativeButton(
+                "Cancel") { dialog, id ->
+                dialog.cancel()
+            }
+            builder.show()
+        }
+    }
+
+    private fun emailLogin() {
+        val email = binding.etEmailLogin.text.toString()
+        val password = binding.etPasswordLogin.text.toString()
+        when {
+            email.isEmpty() -> {
+                binding.etEmailLogin.error = "Input Your Email"
+            }
+            password.isEmpty() -> {
+                binding.etPasswordLogin.error = "Input Your Password"
+            }
+            else -> {
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            Log.d(TAG, "signInWithEmail:success")
+                            val user = auth.currentUser
+                            updateUI(user)
+                        } else {
+                            Log.w(TAG, "signInWithEmail:failure", task.exception)
+                            Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                            updateUI(null)
+                        }
+                    }
+            }
         }
     }
 
@@ -128,7 +164,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null){
-            startActivity(Intent(this@LoginActivity, CriteriaActivity::class.java))
+            startActivity(Intent(this, CriteriaActivity::class.java))
             finish()
         }
     }

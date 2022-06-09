@@ -60,10 +60,12 @@ class WelcomeActivity : AppCompatActivity() {
     private fun setupAction() {
         binding.btnWelcomeLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
 
         binding.btnWelcomeReg.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            finish()
         }
     }
 }
