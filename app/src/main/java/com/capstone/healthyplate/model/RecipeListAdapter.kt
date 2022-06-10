@@ -44,21 +44,6 @@ class RecipeListAdapter(private val recipeList : ArrayList<Recipe>) : RecyclerVi
                     )
                 itemView.context.startActivity(intent, optionsCompat.toBundle())
             }
-
-
-//            itemView.setOnClickListener {
-//                val intent = Intent(itemView.context, DetailRecipeActivity::class.java)
-//                intent.putExtra(DetailRecipeActivity.EXTRA_STORY, recipe)
-//                val optionsCompat: ActivityOptionsCompat =
-//                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-//                        itemView.context as Activity,
-//                        Pair(binding.imgStory, "image"),
-//                        Pair(binding.tvRvName, "name"),
-//                        Pair(binding.tvRvCreate, "create"),
-//                        Pair(binding.tvRvDesc, "desc")
-//                    )
-//                itemView.context.startActivity(intent, optionsCompat.toBundle())
-//            }
         }
     }
 }
