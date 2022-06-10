@@ -9,8 +9,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.capstone.healthyplate.R
 import com.capstone.healthyplate.databinding.ActivityMainBinding
+import com.capstone.healthyplate.model.Recipe
+import com.capstone.healthyplate.model.RecipeListAdapter
 import com.capstone.healthyplate.ui.welcome.WelcomeActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.ktx.auth
@@ -20,6 +23,9 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var rv: RecyclerView
+    private lateinit var recipeList: ArrayList<Recipe>
+    private lateinit var recipeListAdapter: RecipeListAdapter
     private val user = Firebase.auth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {

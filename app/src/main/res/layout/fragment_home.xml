@@ -37,14 +37,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_home"
-        android:layout_width="409dp"
-        android:layout_height="596dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="133dp"
+        android:id="@+id/rv_recipeHome"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_generateHome"
-        tools:listitem="@layout/item_home"/>
+        tools:listitem="@layout/item_generatedrecipelist" />
 </androidx.constraintlayout.widget.ConstraintLayout>

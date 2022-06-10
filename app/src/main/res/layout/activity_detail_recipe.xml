@@ -12,6 +12,7 @@
 
         <ImageView
             android:id="@+id/img_recipeDetail"
+            android:transitionName="image"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginStart="8dp"
@@ -26,6 +27,7 @@
 
         <TextView
             android:id="@+id/txt_recipeNameDetail"
+            android:transitionName="recipeName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

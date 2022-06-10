@@ -138,7 +138,7 @@ class GenerateByCameraActivity : AppCompatActivity() {
             .requireWifi()
             .build()
         FirebaseModelDownloader.getInstance()
-            .getModel("Test-Model", DownloadType.LOCAL_MODEL_UPDATE_IN_BACKGROUND,
+            .getModel("Ingredient-Detector", DownloadType.LOCAL_MODEL_UPDATE_IN_BACKGROUND,
                 conditions)
             .addOnSuccessListener { model: CustomModel? ->
                 // Download complete. Depending on your app, you could enable the ML
