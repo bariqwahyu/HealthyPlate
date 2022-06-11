@@ -55,8 +55,12 @@ class CriteriaActivity : AppCompatActivity() {
 
         binding.btnNext.setOnClickListener {
             if (imageUriString == null) {
-                imageUri = Uri.parse("android.resource://$packageName/" + R.drawable.blank_profile)
-                uploadData()
+                if (imageUri == null) {
+                    imageUri = Uri.parse("android.resource://$packageName/" + R.drawable.blank_profile)
+                    uploadData()
+                } else {
+                    uploadData()
+                }
             } else {
                 uploadData()
             }
