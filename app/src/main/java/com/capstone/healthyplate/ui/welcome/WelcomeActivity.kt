@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.capstone.healthyplate.CriteriaActivity
 import com.capstone.healthyplate.databinding.ActivityWelcomeBinding
 import com.capstone.healthyplate.ui.login.LoginActivity
+import com.capstone.healthyplate.ui.main.MainActivity
 import com.capstone.healthyplate.ui.register.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -52,7 +53,7 @@ class WelcomeActivity : AppCompatActivity() {
 
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null){
-            startActivity(Intent(this, CriteriaActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
     }
@@ -60,12 +61,10 @@ class WelcomeActivity : AppCompatActivity() {
     private fun setupAction() {
         binding.btnWelcomeLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
-            finish()
         }
 
         binding.btnWelcomeReg.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
-            finish()
         }
     }
 }

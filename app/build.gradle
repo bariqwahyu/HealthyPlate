@@ -62,6 +62,7 @@ dependencies {
 
     implementation 'com.google.mlkit:object-detection-custom:17.0.0'
     implementation 'com.google.mlkit:linkfirebase:17.0.0'
+    implementation 'com.google.firebase:firebase-ml-model-interpreter:22.0.4'
     implementation 'com.google.firebase:firebase-ml-modeldownloader-ktx:24.0.3'
     implementation 'org.tensorflow:tensorflow-lite:2.9.0'
 

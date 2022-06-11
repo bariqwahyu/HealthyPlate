@@ -11,8 +11,10 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.text.isDigitsOnly
 import com.bumptech.glide.Glide
 import com.capstone.healthyplate.databinding.ActivityCriteriaBinding
+import com.capstone.healthyplate.model.Users
 import com.capstone.healthyplate.ui.main.MainActivity
 import com.capstone.healthyplate.ui.welcome.WelcomeActivity
 import com.google.firebase.auth.ktx.auth
@@ -29,19 +31,20 @@ class CriteriaActivity : AppCompatActivity() {
     private val storageRef = storage.reference
     private var imageUri: Uri? = null
     private var userImageUri: Uri? = null
+    private var imageUriString: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCriteriaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        checkCriteria()
+        getData()
 
         binding.imgProfileCr.setOnClickListener {
             selectImage()
         }
 
-        emailVerification()
+        //emailVerification()
 
         val spinner = binding.spGender
         ArrayAdapter.createFromResource(this, R.array.gender, android.R.layout.simple_spinner_item)
@@ -51,7 +54,12 @@ class CriteriaActivity : AppCompatActivity() {
             }
 
         binding.btnNext.setOnClickListener {
-            uploadProfilePicture()
+            if (imageUriString == null) {
+                imageUri = Uri.parse("android.resource://$packageName/" + R.drawable.blank_profile)
+                uploadData()
+            } else {
+                uploadData()
+            }
         }
     }
 
@@ -60,13 +68,12 @@ class CriteriaActivity : AppCompatActivity() {
         val notVerified = ContextCompat.getDrawable(this, R.drawable.ic_close_red_24dp)
         if (user!!.isEmailVerified) {
             binding.btnVerification.setCompoundDrawables(null, null, isVerified, null)
-            binding.btnVerification.backgroundTintList = ContextCompat.getColorStateList(this, R.color.green1)
-            binding.btnVerification.setText("Verified")
+            binding.btnVerification.text = "User Verified"
+            binding.btnVerification.isEnabled = false
             Toast.makeText(this, "User is verified...", Toast.LENGTH_SHORT).show()
         } else {
             binding.btnVerification.setCompoundDrawables(null, null, notVerified, null)
-            binding.btnVerification.backgroundTintList = ContextCompat.getColorStateList(this, R.color.green1)
-            binding.btnVerification.setText("Not Verified")
+            binding.btnVerification.text = "Send Email Verification"
             binding.btnVerification.setOnClickListener {
                 user.sendEmailVerification()
                     .addOnSuccessListener {
@@ -80,45 +87,121 @@ class CriteriaActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkCriteria() {
-        val usersRef = db.collection("users").document(userID.toString())
-        usersRef.get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    val imageUri = document.getString("image_url")
-                    val email = document.getString("email")
-                    val name = document.getString("name")
-                    val age = document.get("age")
-                    val gender = document.getString("gender")
-                    val job = document.getString("job")
-                    if (imageUri != null && email != null && name != null && age != null && gender != null && job != null) {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-                    } else {
-                        Glide.with(this)
-                            .load(imageUri)
-                            .error(R.drawable.blank_profile)
-                            .circleCrop()
-                            .into(binding.imgProfileCr)
-                        binding.apply {
-                            etNameCr.setText(name)
-                            etAgeCr.setText(age.toString())
-                            etJobCr.setText(job)
-                            if (gender == "Male" || gender == null) {
-                                spGender.setSelection(0)
-                            } else {
-                                spGender.setSelection(1)
-                            }
-                        }
-                    }
-                    Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+    private fun getData() {
+        val dataUser = intent.getParcelableExtra<Users>(EXTRA_USER)
+        val imageUriDB = dataUser?.imageUri
+        val nameDB = dataUser?.name
+        val ageDB = dataUser?.age
+        val jobDB = dataUser?.job
+        val genderDB = dataUser?.gender
+        val age = stringAge(ageDB)
+        val image = imgUri(imageUriDB)
+        imageUriString = imageUriDB
+
+        Glide.with(this)
+            .load(image)
+            .circleCrop()
+            .into(binding.imgProfileCr)
+        binding.etAgeCr.setText(age)
+        when {
+            nameDB.isNullOrBlank() -> {
+                val name = ""
+                setET(name, jobDB, genderDB)
+            }
+            jobDB.isNullOrBlank() -> {
+                val job = ""
+                setET(nameDB, job, genderDB)
+            }
+            else -> {
+                setET(nameDB, jobDB, genderDB)
+            }
+        }
+    }
+
+    private fun stringAge(ageDB: String?): String {
+        val stringAge =
+            if (ageDB == "null" || ageDB.isNullOrBlank()) {
+            ""
+            } else {
+                if (ageDB.isDigitsOnly()) {
+                    ageDB
                 } else {
-                    Log.d(TAG, "No such document")
+                    ""
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
+        return stringAge
+    }
+
+    private fun imgUri(imageUriDB: String?): Any {
+        val image =
+            if (imageUriDB.isNullOrBlank()) {
+                Uri.parse("android.resource://$packageName/" + R.drawable.blank_profile)
+            } else {
+                imageUriDB
             }
+        return image
+    }
+
+    private fun setET(name: String, job: String?, gender: String?) {
+        binding.apply {
+            etNameCr.setText(name)
+            etJobCr.setText(job)
+            when (gender) {
+                "Male" -> {
+                    spGender.setSelection(0)
+                }
+                "Female" -> {
+                    spGender.setSelection(1)
+                }
+                else -> {
+                    spGender.setSelection(0)
+                }
+            }
+        }
+    }
+
+    private fun selectImage() {
+        val intent = Intent()
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.type = "image/*"
+        val chooser = Intent.createChooser(intent, resources.getString(R.string.choose_image))
+        launcherIntentGallery.launch(chooser)
+    }
+
+    private val launcherIntentGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            imageUri = result.data?.data as Uri
+            Glide.with(this)
+                .load(imageUri)
+                .circleCrop()
+                .into(binding.imgProfileCr)
+        }
+    }
+
+    private fun uploadData(){
+        if (imageUri == null) {
+            addData(imageUriString!!)
+        } else {
+            val profilePicRef = storageRef.child("profile_picture/${userID.toString()}")
+            val uploadTask = profilePicRef.putFile(imageUri!!)
+            uploadTask.continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                profilePicRef.downloadUrl
+            }.addOnCompleteListener { url ->
+                if (url.isSuccessful) {
+                    userImageUri = url.result
+                    addData(userImageUri.toString())
+                }
+            }.addOnFailureListener {
+                Toast.makeText(this, "Upload Failed",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun addData(imageUri: String) {
@@ -138,52 +221,12 @@ class CriteriaActivity : AppCompatActivity() {
                 binding.etJobCr.error = "Masukkan Pekerjaan Anda"
             }
             else -> {
-                uploadData(imageUri, email, name, age.toInt(), gender, job)
+                uploadDataToDB(imageUri, email, name, age.toInt(), gender, job)
             }
         }
     }
 
-    private fun selectImage() {
-        val intent = Intent()
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, resources.getString(R.string.choose_image))
-        launcherIntentGallery.launch(chooser)
-    }
-
-    private val launcherIntentGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            imageUri = result.data?.data as Uri
-            binding.imgProfileCr.setImageURI(imageUri)
-        }
-    }
-
-    private fun uploadProfilePicture(){
-        if (imageUri == null) {
-            imageUri = Uri.parse("android.resource://$packageName/" + R.drawable.blank_profile)
-        }
-        val profilePicRef = storageRef.child("profile_picture/${userID.toString()}")
-        val uploadTask = profilePicRef.putFile(imageUri!!)
-        uploadTask.continueWithTask { task ->
-            if (!task.isSuccessful) {
-                task.exception?.let {
-                    throw it
-                }
-            }
-            profilePicRef.downloadUrl
-        }.addOnCompleteListener { url ->
-            if (url.isSuccessful) {
-                userImageUri = url.result
-                addData(userImageUri.toString())
-            }
-        }.addOnFailureListener {
-            Toast.makeText(this, "Upload Failed",Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun uploadData(imageUri: String, email: String, name: String, age: Int, gender: String, job: String) {
+    private fun uploadDataToDB(imageUri: String, email: String, name: String, age: Int, gender: String, job: String) {
         val user = hashMapOf(
             "image_url" to imageUri,
             "email" to email,
@@ -227,5 +270,6 @@ class CriteriaActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "CriteriaActivity"
+        const val EXTRA_USER = "extra_user"
     }
 }

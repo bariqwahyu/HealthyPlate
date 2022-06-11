@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.capstone.healthyplate.DetailRecipeActivity
 import com.capstone.healthyplate.databinding.ItemGeneratedrecipelistBinding
 
-class RecipeListAdapter(private val recipeList : ArrayList<Recipe>) : RecyclerView.Adapter<RecipeListAdapter.ListViewHolder>() {
+class RecipeListAdapter(private val recipeRVList : ArrayList<RecipeRV>) : RecyclerView.Adapter<RecipeListAdapter.ListViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ListViewHolder {
         val binding = ItemGeneratedrecipelistBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
@@ -19,23 +19,23 @@ class RecipeListAdapter(private val recipeList : ArrayList<Recipe>) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(recipeList[position])
+        holder.bind(recipeRVList[position])
     }
 
-    override fun getItemCount(): Int = recipeList.size
+    override fun getItemCount(): Int = recipeRVList.size
 
     class ListViewHolder(private var binding: ItemGeneratedrecipelistBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(recipe: Recipe) {
+        fun bind(recipeRV: RecipeRV) {
             Glide.with(itemView.context)
-                .load(recipe.foto)
+                .load(recipeRV.foto)
                 .into(binding.imgRecipeGenerated)
             binding.apply {
-                txtRecipeNameGenerated.text = recipe.food_name
+                txtRecipeNameGenerated.text = recipeRV.foodName
             }
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailRecipeActivity::class.java)
-                intent.putExtra(DetailRecipeActivity.EXTRA_RECIPE, recipe)
+                intent.putExtra(DetailRecipeActivity.EXTRA_RECIPE, recipeRV)
                 val optionsCompat: ActivityOptionsCompat =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(
                         itemView.context as Activity,

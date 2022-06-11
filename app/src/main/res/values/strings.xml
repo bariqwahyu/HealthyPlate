@@ -37,4 +37,12 @@
     <string name="ingredients_recipe">Recipe Ingredients</string>
     <string name="kalori_recipe">Kalori</string>
     <string name="choose_image">Choose a Picture</string>
+    <string name="click_to_change">click to change</string>
+    <string name="next">Next</string>
+    <string name="verification">Verification</string>
+    <string name="generate_your_recipe">Generate Your Recipe</string>
+    <string name="karbohidrat">Karbohidrat</string>
+    <string name="lemak">Lemak</string>
+    <string name="serat">Serat</string>
+    <string name="protein">Protein</string>
 </resources>

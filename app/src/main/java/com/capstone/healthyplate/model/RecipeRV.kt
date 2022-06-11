@@ -4,8 +4,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Recipe (
-    val food_name: String,
+data class RecipeRV(
+    val foodName: String,
     val foto: String,
     val bahan: String,
     val langkah: String

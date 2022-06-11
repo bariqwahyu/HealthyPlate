@@ -14,4 +14,5 @@
     <color name="blue1">#FF1572A1</color>
     <color name="blue2">#FF9AD0EC</color>
     <color name="grey_hint">#FFC4C4C4</color>
+    <color name="loading_blue">#55BBDEFB</color>
 </resources>

@@ -40,7 +40,7 @@
             android:text="@string/name_recipe"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textSize="20sp"
             card:layout_constraintBottom_toBottomOf="parent"
             card:layout_constraintEnd_toEndOf="parent"
             card:layout_constraintStart_toStartOf="parent"
