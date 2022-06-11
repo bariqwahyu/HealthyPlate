@@ -30,7 +30,12 @@
         android:theme="@style/Theme.Healthyplate">
         <activity
             android:name=".DetailRecipeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity" />
+        </activity>
         <activity
             android:name=".CriteriaActivity"
             android:exported="false" />
@@ -38,7 +43,7 @@
             android:name=".SelectionActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.generate.GenerateByCameraActivity"
+            android:name=".ui.generate.GenerateByPhotoActivity"
             android:exported="false"
             android:parentActivityName=".ui.main.MainActivity">
             <meta-data

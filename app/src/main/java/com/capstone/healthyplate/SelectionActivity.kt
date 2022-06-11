@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.capstone.healthyplate.databinding.ActivitySelectionBinding
-import com.capstone.healthyplate.ui.generate.GenerateByCameraActivity
+import com.capstone.healthyplate.ui.generate.GenerateByPhotoActivity
 
 class SelectionActivity : AppCompatActivity() {
 
@@ -19,6 +19,6 @@ class SelectionActivity : AppCompatActivity() {
     }
 
     private fun generateByCamera() {
-        startActivity(Intent(this, GenerateByCameraActivity::class.java))
+        startActivity(Intent(this, GenerateByPhotoActivity::class.java))
     }
 }
