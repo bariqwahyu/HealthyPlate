@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.healthyplate.SelectionActivity
 import com.capstone.healthyplate.databinding.FragmentHomeBinding
 import com.capstone.healthyplate.model.RecipeListAdapter
@@ -32,7 +33,7 @@ class HomeFragment : Fragment() {
 
         homeViewModel.recipeRV.observe(viewLifecycleOwner) { recipe ->
             recipeAdapter = RecipeListAdapter(recipe)
-            binding.rvRecipeHome.layoutManager = GridLayoutManager(requireContext(), 2)
+            binding.rvRecipeHome.layoutManager = LinearLayoutManager(requireContext())
             binding.rvRecipeHome.setHasFixedSize(true)
             binding.rvRecipeHome.adapter = recipeAdapter
         }

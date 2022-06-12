@@ -3,7 +3,7 @@
     xmlns:card="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginLeft="8dp"
@@ -15,16 +15,16 @@
     card:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp">
 
         <ImageView
             android:id="@+id/img_recipeGenerated"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="150dp"
             android:contentDescription="@string/img_preview"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             card:layout_constraintEnd_toEndOf="parent"
             card:layout_constraintStart_toStartOf="parent"
             card:layout_constraintTop_toTopOf="parent"
@@ -34,11 +34,11 @@
             android:id="@+id/txt_recipeNameGenerated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:fontFamily="@font/inter_bold"
             android:text="@string/name_recipe"
-            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
             card:layout_constraintBottom_toBottomOf="parent"

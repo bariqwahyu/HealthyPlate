@@ -20,6 +20,7 @@
     <string name="img_preview">Image Preview</string>
     <string name="imgBtn_generate">Take Picture Button</string>
     <string name="no_permission">Can\'t Get Permission</string>
+    <string name="no_image">Please Input Your Image First!</string>
     <string name="by_selection_ingredients">by Selecting Ingredients</string>
     <string name="login">Login</string>
     <string name="dont_have_account">Don\'t Have Account?</string>
@@ -45,4 +46,5 @@
     <string name="lemak">Lemak</string>
     <string name="serat">Serat</string>
     <string name="protein">Protein</string>
+    <string name="forgot_password">Forgot Password?</string>
 </resources>

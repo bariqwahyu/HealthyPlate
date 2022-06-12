@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="451dp" />
+        app:layout_constraintGuide_end="500dp" />
 
     <Button
         android:id="@+id/btn_identify"
@@ -50,13 +50,26 @@
         android:id="@+id/txt_identifyResult"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:text="Result"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/btn_identify"
-        app:layout_constraintStart_toStartOf="@+id/imgBtn_camera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgBtn_camera" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_RecipeGenerated"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_identifyResult"
+        tools:listitem="@layout/item_generatedrecipelist" />
 
     <RelativeLayout
         android:id="@+id/progressBarLayout"

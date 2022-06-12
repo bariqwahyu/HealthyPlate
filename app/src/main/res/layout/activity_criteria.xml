@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2ECE1"
+    android:background="@drawable/account_criteria_background"
     android:foregroundTint="@color/white"
     tools:context=".CriteriaActivity">
 
@@ -19,49 +19,34 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/btn_verification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:drawablePadding="8dp"
-        android:text="@string/verification"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_profileCr" />
-
     <EditText
         android:id="@+id/et_nameCr"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_verification" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_nameETCr" />
 
     <EditText
         android:id="@+id/et_ageCr"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/age"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="@+id/et_nameCr"
         app:layout_constraintStart_toStartOf="@+id/et_nameCr"
-        app:layout_constraintTop_toBottomOf="@+id/et_nameCr" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/et_jobCr"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/job"
@@ -69,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="@+id/et_ageCr"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/et_ageCr"
-        app:layout_constraintTop_toBottomOf="@+id/sp_gender" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Button
         android:id="@+id/btn_next"
@@ -90,12 +75,11 @@
         android:id="@+id/sp_gender"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
         android:entries="@array/gender"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="@+id/et_ageCr"
         app:layout_constraintStart_toStartOf="@+id/et_ageCr"
-        app:layout_constraintTop_toBottomOf="@+id/et_ageCr" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/txt_changePicCR"
@@ -111,24 +95,60 @@
         app:layout_constraintStart_toStartOf="@+id/img_profileCr"
         app:layout_constraintTop_toTopOf="@+id/img_profileCr" />
 
-    <RelativeLayout
-        android:id="@+id/progressBarLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        android:background="@color/loading_blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+    <TextView
+        android:id="@+id/txt_nameETCr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/et_nameCr"
+        app:layout_constraintTop_toBottomOf="@+id/img_profileCr" />
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/et_nameCr"
+        app:layout_constraintTop_toBottomOf="@+id/et_nameCr" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/et_ageCr"
+        app:layout_constraintTop_toBottomOf="@+id/et_ageCr" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/sp_gender"
+        app:layout_constraintTop_toBottomOf="@+id/sp_gender" />
+
+    <!--    <RelativeLayout-->
+<!--        android:id="@+id/progressBarLayout"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:background="@color/loading_blue"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.0"-->
+<!--        tools:visibility="visible">-->
+
+<!--        <ProgressBar-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true" />-->
+<!--    </RelativeLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,26 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cream"
+    android:background="@drawable/login_register_background"
     tools:context=".ui.register.RegisterActivity">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+    <TextView
+        android:id="@+id/txt_RegTitle"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/fredella"
+        android:text="Register to \n new Account!"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/regis" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_emailETReg"
+        style="@style/txtDescription.ET"
+        android:layout_marginTop="24dp"
+        android:text="@string/email"
+        app:layout_constraintStart_toStartOf="@+id/txt_RegTitle"
+        app:layout_constraintTop_toBottomOf="@+id/txt_RegTitle" />
 
     <EditText
         android:id="@+id/et_emailReg"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="32dp"
         android:drawableStart="@drawable/ic_email_24dp"
         android:drawablePadding="8dp"
         android:ems="10"
@@ -31,13 +41,20 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_emailETReg" />
+
+    <TextView
+        android:id="@+id/txt_passwordETReg"
+        style="@style/txtDescription.ET"
+        android:layout_marginTop="8dp"
+        android:text="@string/password"
+        app:layout_constraintStart_toStartOf="@+id/et_emailReg"
+        app:layout_constraintTop_toBottomOf="@+id/et_emailReg" />
 
     <EditText
         android:id="@+id/et_passwordReg"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="24dp"
         android:drawableStart="@drawable/ic_lock_24dp"
         android:drawablePadding="8dp"
         android:ems="10"
@@ -45,13 +62,20 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/et_emailReg"
         app:layout_constraintStart_toStartOf="@+id/et_emailReg"
-        app:layout_constraintTop_toBottomOf="@+id/et_emailReg" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_passwordETReg" />
+
+    <TextView
+        android:id="@+id/txt_confirmETReg"
+        style="@style/txtDescription.ET"
+        android:layout_marginTop="8dp"
+        android:text="@string/confirm_password"
+        app:layout_constraintStart_toStartOf="@+id/et_passwordReg"
+        app:layout_constraintTop_toBottomOf="@+id/et_passwordReg" />
 
     <EditText
         android:id="@+id/et_confirmPasswordReg"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="24dp"
         android:drawableStart="@drawable/ic_lock_24dp"
         android:drawablePadding="8dp"
         android:ems="10"
@@ -59,13 +83,13 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/et_passwordReg"
         app:layout_constraintStart_toStartOf="@+id/et_passwordReg"
-        app:layout_constraintTop_toBottomOf="@+id/et_passwordReg" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_confirmETReg" />
 
     <Button
         android:id="@+id/btn_register"
         android:layout_width="280dp"
         android:layout_height="60dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/green1"
         android:fontFamily="@font/inter_bold"
         android:text="@string/register"
@@ -78,45 +102,45 @@
 
     <TextView
         android:id="@+id/txt_loginRegDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/txtDescription"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/inter_bold"
         android:text="@string/have_an_account"
-        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/btn_register"
         app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 
     <TextView
         android:id="@+id/txt_loginReg"
+        style="@style/txtDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/inter_bold"
         android:text="@string/login"
         android:textColor="@color/blue1"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/txt_loginRegDesc"
         app:layout_constraintTop_toTopOf="@+id/txt_loginRegDesc" />
 
-    <RelativeLayout
-        android:id="@+id/progressBarLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        android:background="@color/loading_blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        <RelativeLayout
+            android:id="@+id/progressBarLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            android:background="@color/loading_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

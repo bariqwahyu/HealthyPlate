@@ -6,16 +6,30 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.liveData
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.healthyplate.R
 import com.capstone.healthyplate.databinding.ActivityGenerateByPhotoBinding
 import com.capstone.healthyplate.Result
+import com.capstone.healthyplate.model.GeneratedListAdapter
+import com.capstone.healthyplate.model.GeneratedRecipeList
+import com.capstone.healthyplate.model.RecipeListAdapter
+import com.capstone.healthyplate.reftrofit.ApiConfig
+import com.capstone.healthyplate.reftrofit.ApiService
+import com.capstone.healthyplate.response.GenerateResponse
+import com.capstone.healthyplate.ui.home.HomeViewModel
 import com.capstone.healthyplate.uriToFile
+import com.google.firebase.firestore.FirebaseFirestore
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -24,11 +38,11 @@ import java.io.File
 class GenerateByPhotoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGenerateByPhotoBinding
-    private lateinit var generateViewModel: GenerateViewModel
-    private lateinit var currentPhotoPath: String
-    private lateinit var imgBitmap: Bitmap
+    private lateinit var generateAdapter: GeneratedListAdapter
+    private lateinit var recipeList: ArrayList<GeneratedRecipeList>
+    private lateinit var db: FirebaseFirestore
     private var getFile: File? = null
-    private var getUri: Uri? = null
+    private val generateViewModel by viewModels<GenerateViewModel>()
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -66,10 +80,24 @@ class GenerateByPhotoActivity : AppCompatActivity() {
         }
 
         this.title = resources.getString(R.string.app_nameGenerate)
-        binding.btnIdentify.isEnabled = false
-        binding.imgBtnCamera.setOnClickListener {
-            selectImage()
+
+        binding.apply {
+            btnIdentify.isEnabled = false
+            imgBtnCamera.setOnClickListener {
+                selectImage()
+            }
+            btnIdentify.setOnClickListener {
+                uploadImage()
+            }
+            txtIdentifyResult.visibility = View.INVISIBLE
+            rvRecipeGenerated.visibility = View.INVISIBLE
         }
+    }
+
+    private fun selectImage() {
+        val selectImage = Intent(Intent.ACTION_GET_CONTENT)
+        selectImage.type = "image/*"
+        startActivityForResult(selectImage, 100)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -80,12 +108,6 @@ class GenerateByPhotoActivity : AppCompatActivity() {
         val myFile = uriToFile(selectedImg, this@GenerateByPhotoActivity)
         getFile = myFile
         binding.btnIdentify.isEnabled = true
-    }
-
-    private fun selectImage() {
-        val selectImage = Intent(Intent.ACTION_GET_CONTENT)
-        selectImage.type = "image/*"
-        startActivityForResult(selectImage, 100)
     }
 
     private fun uploadImage() {
@@ -106,8 +128,12 @@ class GenerateByPhotoActivity : AppCompatActivity() {
                         }
                         is Result.Success -> {
                             showLoading(false)
-                            Toast.makeText(this, result.data.message, Toast.LENGTH_LONG).show()
-                            finish()
+                            binding.rvRecipeGenerated.visibility = View.VISIBLE
+                            binding.rvRecipeGenerated.visibility = View.VISIBLE
+                            val recipeList = result.data.resultList
+                            val listSize = recipeList.indices
+                            getRecipeData(listSize, recipeList)
+                            setRV()
                         }
                         is Result.Error -> {
                             showLoading(false)
@@ -119,6 +145,35 @@ class GenerateByPhotoActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, resources.getString(R.string.no_image), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun getRecipeData(listSize: IntRange, resultList: ArrayList<String?>) {
+        for (i in listSize) {
+            db = FirebaseFirestore.getInstance()
+            db.collection("menu").document(resultList[i]!!)
+                .get()
+                .addOnSuccessListener { document ->
+                    recipeList = arrayListOf()
+                    recipeList.clear()
+
+                    recipeList.add((GeneratedRecipeList(
+                        document.data!!["food_name"] as String,
+                        document.data!!["foto"] as String,
+                        document.data!!["bahan"] as String,
+                        document.data!!["langkah"] as String
+                    )))
+                }
+                .addOnFailureListener {
+                    Log.d(TAG, it.message.toString())
+                }
+        }
+    }
+
+    private fun setRV() {
+        generateAdapter = GeneratedListAdapter(recipeList)
+        binding.rvRecipeGenerated.layoutManager = LinearLayoutManager(this)
+        binding.rvRecipeGenerated.setHasFixedSize(true)
+        binding.rvRecipeGenerated.adapter = generateAdapter
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -134,6 +189,6 @@ class GenerateByPhotoActivity : AppCompatActivity() {
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private const val TAG = "MLKit"
+        private const val TAG = "GenerateActivity"
     }
 }
