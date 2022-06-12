@@ -1,0 +1,13 @@
+argparse
+flask
+numpy
+opencv-python-headless
+os-win
+pathlib
+python-time
+mathplotlib
+tensorflow-gpu
+zipfile36
+flask-gunicorn
+
+~/.local/bin/gunicorn -b :8080 main:app
