@@ -25,8 +25,8 @@
 
     <ImageView
         android:id="@+id/img_welcome"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="240dp"
+        android:layout_height="221dp"
         android:layout_marginTop="64dp"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="@+id/txt_welcome"
@@ -38,7 +38,7 @@
         android:id="@+id/btn_welcomeLogin"
         android:layout_width="280dp"
         android:layout_height="60dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="48dp"
         android:backgroundTint="@color/green1"
         android:fontFamily="@font/fredella"
         android:text="@string/login"
