@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cream"
+    android:background="@color/white"
     tools:context=".ui.home.HomeFragment">
 
     <Button
@@ -14,7 +14,7 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="46dp"
-        android:backgroundTint="@color/green1"
+        android:backgroundTint="@color/hp_green"
         android:text="@string/generate_your_recipe"
         android:textAllCaps="false"
         android:textSize="20sp"
@@ -38,15 +38,15 @@
         android:id="@+id/progressBarLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="invisible"
-        tools:visibility="visible"
         android:background="@color/loading_blue"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="visible">
 
         <ProgressBar
             android:layout_width="wrap_content"

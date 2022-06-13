@@ -27,10 +27,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Healthyplate">
+        android:theme="@style/Theme.Healthyplate"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".DetailRecipeActivity"
+            android:name=".ui.detail.DetailGeneratedActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.detail.DetailRecipeActivity"
             android:exported="false"
             android:parentActivityName=".ui.main.MainActivity">
             <meta-data
@@ -41,10 +49,7 @@
             android:name=".CriteriaActivity"
             android:exported="false" />
         <activity
-            android:name=".SelectionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.generate.GenerateByPhotoActivity"
+            android:name=".ui.generate.GenerateActivity"
             android:exported="false"
             android:parentActivityName=".ui.main.MainActivity">
             <meta-data

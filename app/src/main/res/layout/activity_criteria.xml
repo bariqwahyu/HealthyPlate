@@ -95,27 +95,15 @@
         app:layout_constraintStart_toStartOf="@+id/img_profileCr"
         app:layout_constraintTop_toTopOf="@+id/img_profileCr" />
 
-    <Button
-        android:id="@+id/btn_verification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:drawablePadding="8dp"
-        android:text="@string/verification"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_profileCr" />
-
     <TextView
         android:id="@+id/txt_nameETCr"
+        style="@style/txtDescription.ET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/txtDescription.ET"
         android:layout_marginTop="16dp"
-        android:text="Name"
+        android:text="@string/name"
         app:layout_constraintStart_toStartOf="@+id/et_nameCr"
-        app:layout_constraintTop_toBottomOf="@+id/btn_verification" />
+        app:layout_constraintTop_toBottomOf="@+id/img_profileCr" />
 
     <TextView
         android:id="@+id/ageETCr"
@@ -123,7 +111,7 @@
         android:layout_height="wrap_content"
         style="@style/txtDescription.ET"
         android:layout_marginTop="8dp"
-        android:text="Age"
+        android:text="@string/age"
         app:layout_constraintStart_toStartOf="@+id/et_nameCr"
         app:layout_constraintTop_toBottomOf="@+id/et_nameCr" />
 
@@ -133,7 +121,7 @@
         android:layout_height="wrap_content"
         style="@style/txtDescription.ET"
         android:layout_marginTop="8dp"
-        android:text="Male"
+        android:text="@string/gender"
         app:layout_constraintStart_toStartOf="@+id/et_ageCr"
         app:layout_constraintTop_toBottomOf="@+id/et_ageCr" />
 
@@ -143,28 +131,28 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         style="@style/txtDescription.ET"
-        android:text="Job"
+        android:text="@string/job"
         app:layout_constraintStart_toStartOf="@+id/sp_gender"
         app:layout_constraintTop_toBottomOf="@+id/sp_gender" />
 
-    <!--    <RelativeLayout-->
-<!--        android:id="@+id/progressBarLayout"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:background="@color/loading_blue"-->
-<!--        android:visibility="invisible"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.0"-->
-<!--        tools:visibility="visible">-->
+        <RelativeLayout
+        android:id="@+id/progressBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/loading_blue"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="visible">
 
-<!--        <ProgressBar-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true" />-->
-<!--    </RelativeLayout>-->
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.text.isDigitsOnly
 import com.bumptech.glide.Glide
 import com.capstone.healthyplate.databinding.ActivityCriteriaBinding
@@ -44,8 +43,6 @@ class CriteriaActivity : AppCompatActivity() {
             selectImage()
         }
 
-        //emailVerification()
-
         val spinner = binding.spGender
         ArrayAdapter.createFromResource(this, R.array.gender, android.R.layout.simple_spinner_item)
             .also { adapter ->
@@ -64,30 +61,6 @@ class CriteriaActivity : AppCompatActivity() {
             } else {
                 uploadData()
             }
-        }
-    }
-
-    private fun emailVerification() {
-        val isVerified = ContextCompat.getDrawable(this, R.drawable.ic_check_white_24dp)
-        val notVerified = ContextCompat.getDrawable(this, R.drawable.ic_close_red_24dp)
-        if (user!!.isEmailVerified) {
-            binding.btnVerification.setCompoundDrawables(null, null, isVerified, null)
-            binding.btnVerification.text = "User Verified"
-            binding.btnVerification.isEnabled = false
-            Toast.makeText(this, "User is verified...", Toast.LENGTH_SHORT).show()
-        } else {
-            binding.btnVerification.setCompoundDrawables(null, null, notVerified, null)
-            binding.btnVerification.text = "Send Email Verification"
-            binding.btnVerification.setOnClickListener {
-                user.sendEmailVerification()
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Instructions Sent...", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(this, "Failed to send due to " + e.message, Toast.LENGTH_SHORT).show()
-                    }
-            }
-            Toast.makeText(this, "User isn't verified...", Toast.LENGTH_SHORT).show()
         }
     }
 

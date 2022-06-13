@@ -1,5 +1,9 @@
 package com.capstone.healthyplate.response
 
+import com.google.gson.annotations.SerializedName
+
 data class GenerateResponse(
-    val resultList: ArrayList<String?>
+
+	@field:SerializedName("result")
+	val result: List<String?>? = null
 )

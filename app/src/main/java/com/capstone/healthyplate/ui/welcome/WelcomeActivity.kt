@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.capstone.healthyplate.CriteriaActivity
 import com.capstone.healthyplate.databinding.ActivityWelcomeBinding
 import com.capstone.healthyplate.ui.login.LoginActivity
-import com.capstone.healthyplate.ui.main.MainActivity
 import com.capstone.healthyplate.ui.register.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

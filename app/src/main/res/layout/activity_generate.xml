@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cream"
-    tools:context=".ui.generate.GenerateByPhotoActivity">
+    android:background="@drawable/detail_background"
+    tools:context=".ui.generate.GenerateActivity">
 
     <ImageView
         android:id="@+id/img_preview"
@@ -34,56 +34,53 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="500dp" />
+        app:layout_constraintGuide_end="460dp" />
 
     <Button
-        android:id="@+id/btn_identify"
+        android:id="@+id/btn_generate"
         android:layout_width="120dp"
         android:layout_height="64dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="50dp"
-        android:text="Identify"
+        android:text="@string/generate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_preview" />
 
     <TextView
         android:id="@+id/txt_identifyResult"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/txtDetail"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Result"
+        android:text="@string/result"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgBtn_camera" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_RecipeGenerated"
+    <ListView
+        android:id="@+id/list_result"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_identifyResult"
-        tools:listitem="@layout/item_generatedrecipelist" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_identifyResult" />
 
     <RelativeLayout
         android:id="@+id/progressBarLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="invisible"
-        tools:visibility="visible"
         android:background="@color/loading_blue"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="visible">
 
         <ProgressBar
             android:layout_width="wrap_content"

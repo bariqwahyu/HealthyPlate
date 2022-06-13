@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/detail_background"
-    tools:context=".ui.detail.DetailRecipeActivity">
+    tools:context=".ui.detail.DetailGeneratedActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/img_recipeDetail"
+            android:id="@+id/img_recipeGenerated"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:contentDescription="@string/img_preview"
@@ -24,7 +24,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/txt_recipeNameDetail"
+            android:id="@+id/txt_recipeNameGenerated"
             style="@style/txtDetail.title"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
@@ -33,10 +33,10 @@
             android:transitionName="recipeName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_recipeDetail" />
+            app:layout_constraintTop_toBottomOf="@+id/img_recipeGenerated" />
 
         <TextView
-            android:id="@+id/txt_kalori"
+            android:id="@+id/txt_kaloriGenerated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -44,12 +44,12 @@
             android:text="@string/kalori_recipe"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txt_recipeNameDetail"
-            app:layout_constraintStart_toStartOf="@+id/txt_recipeNameDetail"
-            app:layout_constraintTop_toBottomOf="@+id/txt_recipeNameDetail" />
+            app:layout_constraintEnd_toEndOf="@+id/txt_recipeNameGenerated"
+            app:layout_constraintStart_toStartOf="@+id/txt_recipeNameGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_recipeNameGenerated" />
 
         <TextView
-            android:id="@+id/txt_karbohidrat"
+            android:id="@+id/txt_karbohidratGenerated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -59,11 +59,11 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="@+id/txt_kalori"
-            app:layout_constraintTop_toBottomOf="@+id/txt_kalori" />
+            app:layout_constraintStart_toStartOf="@+id/txt_kaloriGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_kaloriGenerated" />
 
         <TextView
-            android:id="@+id/txt_protein"
+            android:id="@+id/txt_proteinGenerated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -72,12 +72,12 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/txt_serat"
-            app:layout_constraintStart_toStartOf="@+id/txt_karbohidrat"
-            app:layout_constraintTop_toBottomOf="@+id/txt_karbohidrat" />
+            app:layout_constraintEnd_toStartOf="@+id/txt_seratGenerated"
+            app:layout_constraintStart_toStartOf="@+id/txt_karbohidratGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_karbohidratGenerated" />
 
         <TextView
-            android:id="@+id/txt_lemak"
+            android:id="@+id/txt_lemakGenerated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_medium"
@@ -85,13 +85,13 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_karbohidrat"
-            app:layout_constraintEnd_toEndOf="@+id/txt_kalori"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_karbohidratGenerated"
+            app:layout_constraintEnd_toEndOf="@+id/txt_kaloriGenerated"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="@+id/txt_karbohidrat" />
+            app:layout_constraintTop_toTopOf="@+id/txt_karbohidratGenerated" />
 
         <TextView
-            android:id="@+id/txt_serat"
+            android:id="@+id/txt_seratGenerated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_medium"
@@ -99,20 +99,20 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_protein"
-            app:layout_constraintEnd_toEndOf="@+id/txt_lemak"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_proteinGenerated"
+            app:layout_constraintEnd_toEndOf="@+id/txt_lemakGenerated"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="@+id/txt_protein" />
+            app:layout_constraintTop_toTopOf="@+id/txt_proteinGenerated" />
 
         <TextView
-            android:id="@+id/txt_ingredientsTitle"
+            android:id="@+id/txt_ingredientsTitleGenerated"
             style="@style/txtDetail.desc"
             android:text="@string/ingredients"
-            app:layout_constraintStart_toStartOf="@+id/txt_protein"
-            app:layout_constraintTop_toBottomOf="@+id/txt_protein" />
+            app:layout_constraintStart_toStartOf="@+id/txt_proteinGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_proteinGenerated" />
 
         <TextView
-            android:id="@+id/txt_ingredients"
+            android:id="@+id/txt_ingredientsGenerated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -123,17 +123,17 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_ingredientsTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_ingredientsTitleGenerated" />
 
         <TextView
-            android:id="@+id/txt_stepDesc"
+            android:id="@+id/txt_stepDescGenerated"
             style="@style/txtDetail.desc"
             android:text="@string/steps"
-            app:layout_constraintStart_toStartOf="@+id/txt_ingredients"
-            app:layout_constraintTop_toBottomOf="@+id/txt_ingredients" />
+            app:layout_constraintStart_toStartOf="@+id/txt_ingredientsGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_ingredientsGenerated" />
 
         <TextView
-            android:id="@+id/txt_stepDetail"
+            android:id="@+id/txt_stepDetailGenerated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -141,9 +141,9 @@
             android:text="@string/recipe_step"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txt_ingredients"
-            app:layout_constraintStart_toStartOf="@+id/txt_ingredients"
-            app:layout_constraintTop_toBottomOf="@+id/txt_stepDesc" />
+            app:layout_constraintEnd_toEndOf="@+id/txt_ingredientsGenerated"
+            app:layout_constraintStart_toStartOf="@+id/txt_ingredientsGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_stepDescGenerated" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"

@@ -12,12 +12,6 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_history"
-        android:name="com.capstone.healthyplate.ui.history.HistoryFragment"
-        android:label="@string/title_history"
-        tools:layout="@layout/fragment_history" />
-
-    <fragment
         android:id="@+id/navigation_account"
         android:name="com.capstone.healthyplate.ui.account.AccountFragment"
         android:label="@string/title_account"

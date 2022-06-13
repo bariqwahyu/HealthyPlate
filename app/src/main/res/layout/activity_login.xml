@@ -13,7 +13,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/fredella"
-        android:text="Login to \n your Account!"
+        android:text="@string/login_to_account"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/black"
@@ -128,24 +128,24 @@
         app:layout_constraintStart_toStartOf="@+id/btn_login"
         app:layout_constraintTop_toBottomOf="@+id/txt_regLoginDesc" />
 
-    <!--    <RelativeLayout-->
-<!--        android:id="@+id/progressBarLayout"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:background="@color/loading_blue"-->
-<!--        android:visibility="invisible"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.0"-->
-<!--        tools:visibility="visible">-->
+        <RelativeLayout
+        android:id="@+id/progressBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/loading_blue"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="visible">
 
-<!--        <ProgressBar-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true" />-->
-<!--    </RelativeLayout>-->
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

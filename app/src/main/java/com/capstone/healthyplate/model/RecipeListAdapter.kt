@@ -8,8 +8,8 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.capstone.healthyplate.DetailRecipeActivity
 import com.capstone.healthyplate.databinding.ItemGeneratedrecipelistBinding
+import com.capstone.healthyplate.ui.detail.DetailRecipeActivity
 
 class RecipeListAdapter(private val recipeRVList : ArrayList<RecipeRV>) : RecyclerView.Adapter<RecipeListAdapter.ListViewHolder>() {
 

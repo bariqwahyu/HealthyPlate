@@ -3,44 +3,31 @@ package com.capstone.healthyplate.ui.generate
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.healthyplate.R
-import com.capstone.healthyplate.databinding.ActivityGenerateByPhotoBinding
 import com.capstone.healthyplate.Result
-import com.capstone.healthyplate.model.GeneratedListAdapter
-import com.capstone.healthyplate.model.GeneratedRecipeList
-import com.capstone.healthyplate.model.RecipeListAdapter
+import com.capstone.healthyplate.databinding.ActivityGenerateBinding
 import com.capstone.healthyplate.reftrofit.ApiConfig
 import com.capstone.healthyplate.reftrofit.ApiService
-import com.capstone.healthyplate.response.GenerateResponse
-import com.capstone.healthyplate.ui.home.HomeViewModel
+import com.capstone.healthyplate.ui.detail.DetailGeneratedActivity
 import com.capstone.healthyplate.uriToFile
-import com.google.firebase.firestore.FirebaseFirestore
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class GenerateByPhotoActivity : AppCompatActivity() {
+class GenerateActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityGenerateByPhotoBinding
-    private lateinit var generateAdapter: GeneratedListAdapter
-    private lateinit var recipeList: ArrayList<GeneratedRecipeList>
-    private lateinit var db: FirebaseFirestore
+    private lateinit var binding: ActivityGenerateBinding
+    private lateinit var apiService: ApiService
     private var getFile: File? = null
     private val generateViewModel by viewModels<GenerateViewModel>()
 
@@ -68,7 +55,7 @@ class GenerateByPhotoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityGenerateByPhotoBinding.inflate(layoutInflater)
+        binding = ActivityGenerateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         if (!allPermissionsGranted()) {
@@ -79,18 +66,18 @@ class GenerateByPhotoActivity : AppCompatActivity() {
             )
         }
 
+        apiService = ApiConfig.getApiService()
+
         this.title = resources.getString(R.string.app_nameGenerate)
 
         binding.apply {
-            btnIdentify.isEnabled = false
+            btnGenerate.isEnabled = false
             imgBtnCamera.setOnClickListener {
                 selectImage()
             }
-            btnIdentify.setOnClickListener {
+            btnGenerate.setOnClickListener {
                 uploadImage()
             }
-            txtIdentifyResult.visibility = View.INVISIBLE
-            rvRecipeGenerated.visibility = View.INVISIBLE
         }
     }
 
@@ -105,19 +92,19 @@ class GenerateByPhotoActivity : AppCompatActivity() {
 
         val selectedImg: Uri = data?.data as Uri
         binding.imgPreview.setImageURI(selectedImg)
-        val myFile = uriToFile(selectedImg, this@GenerateByPhotoActivity)
+        val myFile = uriToFile(selectedImg, this@GenerateActivity)
         getFile = myFile
-        binding.btnIdentify.isEnabled = true
+        binding.btnGenerate.isEnabled = true
     }
 
     private fun uploadImage() {
         if (getFile != null) {
             showLoading(true)
             val file = getFile as File
-            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val requestImageFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "photo",
-                file.name,
+                "file",
+                "telur_asli(1).jpg",
                 requestImageFile
             )
             generateViewModel.uploadPhoto(imageMultipart).observe(this) { result ->
@@ -128,12 +115,14 @@ class GenerateByPhotoActivity : AppCompatActivity() {
                         }
                         is Result.Success -> {
                             showLoading(false)
-                            binding.rvRecipeGenerated.visibility = View.VISIBLE
-                            binding.rvRecipeGenerated.visibility = View.VISIBLE
-                            val recipeList = result.data.resultList
-                            val listSize = recipeList.indices
-                            getRecipeData(listSize, recipeList)
-                            setRV()
+                            val resultList = result.data.result as List<String>
+                            binding.listResult.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, resultList)
+                            binding.listResult.setOnItemClickListener { parent, _, position, _ ->
+                                val selectedItem = parent.getItemAtPosition(position) as String
+                                val intent = Intent(this, DetailGeneratedActivity::class.java)
+                                intent.putExtra(DetailGeneratedActivity.EXTRA_NAME, selectedItem)
+                                startActivity(intent)
+                            }
                         }
                         is Result.Error -> {
                             showLoading(false)
@@ -145,35 +134,6 @@ class GenerateByPhotoActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, resources.getString(R.string.no_image), Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun getRecipeData(listSize: IntRange, resultList: ArrayList<String?>) {
-        for (i in listSize) {
-            db = FirebaseFirestore.getInstance()
-            db.collection("menu").document(resultList[i]!!)
-                .get()
-                .addOnSuccessListener { document ->
-                    recipeList = arrayListOf()
-                    recipeList.clear()
-
-                    recipeList.add((GeneratedRecipeList(
-                        document.data!!["food_name"] as String,
-                        document.data!!["foto"] as String,
-                        document.data!!["bahan"] as String,
-                        document.data!!["langkah"] as String
-                    )))
-                }
-                .addOnFailureListener {
-                    Log.d(TAG, it.message.toString())
-                }
-        }
-    }
-
-    private fun setRV() {
-        generateAdapter = GeneratedListAdapter(recipeList)
-        binding.rvRecipeGenerated.layoutManager = LinearLayoutManager(this)
-        binding.rvRecipeGenerated.setHasFixedSize(true)
-        binding.rvRecipeGenerated.adapter = generateAdapter
     }
 
     private fun showLoading(isLoading: Boolean) {
