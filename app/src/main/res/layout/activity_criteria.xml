@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2ECE1"
+    android:background="@drawable/account_criteria_background"
+    android:foregroundTint="@color/white"
     tools:context=".CriteriaActivity">
 
     <ImageView
@@ -12,75 +13,48 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="48dp"
+        android:contentDescription="@string/img_preview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_verification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/black"
-        android:text="Verification"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_profileCr" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
         android:id="@+id/et_nameCr"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_email_24dp"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/name"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_verification" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_nameETCr" />
 
     <EditText
         android:id="@+id/et_ageCr"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_email_24dp"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/age"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="@+id/et_nameCr"
         app:layout_constraintStart_toStartOf="@+id/et_nameCr"
-        app:layout_constraintTop_toBottomOf="@+id/et_nameCr" />
-
-    <EditText
-        android:id="@+id/et_genderCr"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_email_24dp"
-        android:drawablePadding="8dp"
-        android:ems="10"
-        android:hint="@string/gender"
-        app:layout_constraintEnd_toEndOf="@+id/et_ageCr"
-        app:layout_constraintStart_toStartOf="@+id/et_ageCr"
-        app:layout_constraintTop_toBottomOf="@+id/et_ageCr" />
+        app:layout_constraintTop_toBottomOf="@+id/ageETCr" />
 
     <EditText
         android:id="@+id/et_jobCr"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_email_24dp"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/job"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="@+id/et_ageCr"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/et_ageCr"
-        app:layout_constraintTop_toBottomOf="@+id/et_genderCr" />
+        app:layout_constraintTop_toBottomOf="@+id/jobETCr" />
 
     <Button
         android:id="@+id/btn_next"
@@ -89,11 +63,96 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/green1"
         android:fontFamily="@font/inter_bold"
-        android:text="Next"
+        android:text="@string/next"
         android:textAllCaps="false"
         android:textSize="20sp"
         app:cornerRadius="30dp"
-        app:layout_constraintEnd_toEndOf="@+id/et_genderCr"
-        app:layout_constraintStart_toStartOf="@+id/et_genderCr"
+        app:layout_constraintEnd_toEndOf="@+id/et_jobCr"
+        app:layout_constraintStart_toStartOf="@+id/et_jobCr"
         app:layout_constraintTop_toBottomOf="@+id/et_jobCr" />
+
+    <Spinner
+        android:id="@+id/sp_gender"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:entries="@array/gender"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="@+id/et_ageCr"
+        app:layout_constraintStart_toStartOf="@+id/et_ageCr"
+        app:layout_constraintTop_toBottomOf="@+id/maleETCr" />
+
+    <TextView
+        android:id="@+id/txt_changePicCR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#A6BBDEFB"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="@string/click_to_change"
+        android:textColor="#1565C0"
+        app:layout_constraintBottom_toBottomOf="@+id/img_profileCr"
+        app:layout_constraintEnd_toEndOf="@+id/img_profileCr"
+        app:layout_constraintStart_toStartOf="@+id/img_profileCr"
+        app:layout_constraintTop_toTopOf="@+id/img_profileCr" />
+
+    <TextView
+        android:id="@+id/txt_nameETCr"
+        style="@style/txtDescription.ET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/name"
+        app:layout_constraintStart_toStartOf="@+id/et_nameCr"
+        app:layout_constraintTop_toBottomOf="@+id/img_profileCr" />
+
+    <TextView
+        android:id="@+id/ageETCr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/txtDescription.ET"
+        android:layout_marginTop="8dp"
+        android:text="@string/age"
+        app:layout_constraintStart_toStartOf="@+id/et_nameCr"
+        app:layout_constraintTop_toBottomOf="@+id/et_nameCr" />
+
+    <TextView
+        android:id="@+id/maleETCr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/txtDescription.ET"
+        android:layout_marginTop="8dp"
+        android:text="@string/gender"
+        app:layout_constraintStart_toStartOf="@+id/et_ageCr"
+        app:layout_constraintTop_toBottomOf="@+id/et_ageCr" />
+
+    <TextView
+        android:id="@+id/jobETCr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        style="@style/txtDescription.ET"
+        android:text="@string/job"
+        app:layout_constraintStart_toStartOf="@+id/sp_gender"
+        app:layout_constraintTop_toBottomOf="@+id/sp_gender" />
+
+        <RelativeLayout
+        android:id="@+id/progressBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/loading_blue"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

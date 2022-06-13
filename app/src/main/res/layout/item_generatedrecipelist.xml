@@ -10,39 +10,38 @@
     android:layout_marginTop="4dp"
     android:layout_marginRight="8dp"
     android:layout_marginBottom="4dp"
+    android:backgroundTint="@color/white"
     android:orientation="vertical"
-    card:cardCornerRadius="4dp">
+    card:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="4dp">
 
         <ImageView
             android:id="@+id/img_recipeGenerated"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
             android:contentDescription="@string/img_preview"
-            card:layout_constraintBottom_toBottomOf="parent"
+            android:scaleType="centerCrop"
+            card:layout_constraintEnd_toEndOf="parent"
             card:layout_constraintStart_toStartOf="parent"
             card:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/txt_recipeNameGenerated"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/inter_bold"
+            style="@style/txtDetail"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/name_recipe"
             android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textSize="24sp"
+            card:layout_constraintBottom_toBottomOf="parent"
             card:layout_constraintEnd_toEndOf="parent"
-            card:layout_constraintStart_toEndOf="@+id/img_recipeGenerated"
-            card:layout_constraintTop_toTopOf="@+id/img_recipeGenerated" />
+            card:layout_constraintStart_toStartOf="parent"
+            card:layout_constraintTop_toBottomOf="@+id/img_recipeGenerated" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

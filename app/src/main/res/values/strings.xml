@@ -9,7 +9,10 @@
     <string name="password">Password</string>
     <string name="name">Name</string>
     <string name="age">Age</string>
-    <string name="gender">Gender</string>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
     <string name="job">Job</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="have_an_account">Have an Account?</string>
@@ -17,6 +20,7 @@
     <string name="img_preview">Image Preview</string>
     <string name="imgBtn_generate">Take Picture Button</string>
     <string name="no_permission">Can\'t Get Permission</string>
+    <string name="no_image">Please Input Your Image First!</string>
     <string name="by_selection_ingredients">by Selecting Ingredients</string>
     <string name="login">Login</string>
     <string name="dont_have_account">Don\'t Have Account?</string>
@@ -24,11 +28,31 @@
     <string name="logout">Logout</string>
     <string name="google_signIn">Sign in with Google</string>
     <string name="google_signUp">Sign up with Google</string>
-    <string name="name_account">Name : %1$s</string>
-    <string name="email_account">Email : %1$s</string>
-    <string name="age_account">Age : %1$s</string>
-    <string name="gender_account">Gender : %1$s</string>
-    <string name="job_account">Job : %1$s</string>
+    <string name="name_account">Name : \n%1$s</string>
+    <string name="email_account">Email : \n%1$s</string>
+    <string name="age_account">Age : \n%1$s</string>
+    <string name="gender_account">Gender : \n%1$s</string>
+    <string name="job_account">Job : \n%1$s</string>
     <string name="name_recipe">Recipe Name</string>
     <string name="recipe_step">Step for This Recipe</string>
+    <string name="ingredients_recipe">Recipe Ingredients</string>
+    <string name="kalori_recipe">Kalori</string>
+    <string name="choose_image">Choose a Picture</string>
+    <string name="click_to_change">click to change</string>
+    <string name="next">Next</string>
+    <string name="verification">Verification</string>
+    <string name="generate_your_recipe">Generate Your Recipe</string>
+    <string name="karbohidrat">Karbohidrat</string>
+    <string name="lemak">Lemak</string>
+    <string name="serat">Serat</string>
+    <string name="protein">Protein</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="generate">Generate</string>
+    <string name="result">Result</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="login_to_account">Login to \n your Account!</string>
+    <string name="register_to_account">Register to \n new Account!</string>
+    <string name="gender">gender</string>
 </resources>

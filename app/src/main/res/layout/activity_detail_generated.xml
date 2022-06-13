@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/detail_background"
+    tools:context=".ui.detail.DetailGeneratedActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_recipeGenerated"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/img_preview"
+            android:scaleType="fitXY"
+            android:transitionName="image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/txt_recipeNameGenerated"
+            style="@style/txtDetail.title"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/name_recipe"
+            android:transitionName="recipeName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_recipeGenerated" />
+
+        <TextView
+            android:id="@+id/txt_kaloriGenerated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/kalori_recipe"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/txt_recipeNameGenerated"
+            app:layout_constraintStart_toStartOf="@+id/txt_recipeNameGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_recipeNameGenerated" />
+
+        <TextView
+            android:id="@+id/txt_karbohidratGenerated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/karbohidrat"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/txt_kaloriGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_kaloriGenerated" />
+
+        <TextView
+            android:id="@+id/txt_proteinGenerated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/protein"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/txt_seratGenerated"
+            app:layout_constraintStart_toStartOf="@+id/txt_karbohidratGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_karbohidratGenerated" />
+
+        <TextView
+            android:id="@+id/txt_lemakGenerated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/lemak"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_karbohidratGenerated"
+            app:layout_constraintEnd_toEndOf="@+id/txt_kaloriGenerated"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/txt_karbohidratGenerated" />
+
+        <TextView
+            android:id="@+id/txt_seratGenerated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/serat"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_proteinGenerated"
+            app:layout_constraintEnd_toEndOf="@+id/txt_lemakGenerated"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/txt_proteinGenerated" />
+
+        <TextView
+            android:id="@+id/txt_ingredientsTitleGenerated"
+            style="@style/txtDetail.desc"
+            android:text="@string/ingredients"
+            app:layout_constraintStart_toStartOf="@+id/txt_proteinGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_proteinGenerated" />
+
+        <TextView
+            android:id="@+id/txt_ingredientsGenerated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/ingredients_recipe"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_ingredientsTitleGenerated" />
+
+        <TextView
+            android:id="@+id/txt_stepDescGenerated"
+            style="@style/txtDetail.desc"
+            android:text="@string/steps"
+            app:layout_constraintStart_toStartOf="@+id/txt_ingredientsGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_ingredientsGenerated" />
+
+        <TextView
+            android:id="@+id/txt_stepDetailGenerated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/recipe_step"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/txt_ingredientsGenerated"
+            app:layout_constraintStart_toStartOf="@+id/txt_ingredientsGenerated"
+            app:layout_constraintTop_toBottomOf="@+id/txt_stepDescGenerated" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="205dp" />
+
+        <RelativeLayout
+            android:id="@+id/progressBarLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/loading_blue"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:visibility="visible">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

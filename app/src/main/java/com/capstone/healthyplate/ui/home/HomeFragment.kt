@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.capstone.healthyplate.SelectionActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.healthyplate.databinding.FragmentHomeBinding
+import com.capstone.healthyplate.model.RecipeListAdapter
+import com.capstone.healthyplate.ui.generate.GenerateActivity
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private lateinit var recipeAdapter: RecipeListAdapter
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -23,24 +23,25 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        val homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.btnGenerateHome.setOnClickListener { toSelectionActivity() }
+        binding.btnGenerateHome.setOnClickListener { toGenerateActivity() }
 
-//        val txt_regLoginDesc: TextView = binding.textHome
-//        homeViewModel.text.observe(viewLifecycleOwner) {
-//            txt_regLoginDesc.text = it
-//        }
+        homeViewModel.recipeRV.observe(viewLifecycleOwner) { recipe ->
+            recipeAdapter = RecipeListAdapter(recipe)
+            binding.rvRecipeHome.layoutManager = LinearLayoutManager(requireContext())
+            binding.rvRecipeHome.setHasFixedSize(true)
+            binding.rvRecipeHome.adapter = recipeAdapter
+        }
         return root
     }
 
-    fun toSelectionActivity() {
-        val intent = Intent (getActivity(), SelectionActivity::class.java)
-        getActivity()?.startActivity(intent)
+    private fun toGenerateActivity() {
+        val intent = Intent (activity, GenerateActivity::class.java)
+        activity?.startActivity(intent)
     }
 
     override fun onDestroyView() {

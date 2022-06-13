@@ -13,5 +13,9 @@
     <color name="green3">#FF1D5C63</color>
     <color name="blue1">#FF1572A1</color>
     <color name="blue2">#FF9AD0EC</color>
+    <color name="hp_yellow">#FFF7C81E</color>
+    <color name="hp_green">#FF006837</color>
+    <color name="hp_red">#FFDB504A</color>
     <color name="grey_hint">#FFC4C4C4</color>
+    <color name="loading_blue">#55BBDEFB</color>
 </resources>

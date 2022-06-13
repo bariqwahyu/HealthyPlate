@@ -3,6 +3,7 @@ package com.capstone.healthyplate.ui.register
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.healthyplate.databinding.ActivityRegisterBinding
@@ -44,14 +45,17 @@ class RegisterActivity : AppCompatActivity() {
                     binding.etConfirmPasswordReg.error = "Password tidak sesuai"
                 }
                 else -> {
+                    showLoading(true)
                     auth.createUserWithEmailAndPassword(email, confirmPassword)
                         .addOnCompleteListener(this) { task ->
+                            showLoading(false)
                             if (task.isSuccessful) {
                                 Log.d(TAG, "createUserWithEmail:success")
                                 startActivity(Intent(this, LoginActivity::class.java))
+                                finish()
                             } else {
                                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                                Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(baseContext, task.exception.toString(), Toast.LENGTH_SHORT).show()
                             }
                         }
                 }
@@ -60,6 +64,17 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.txtLoginReg.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.apply {
+            if (isLoading) {
+                progressBarLayout.visibility = View.VISIBLE
+            } else {
+                progressBarLayout.visibility = View.INVISIBLE
+            }
         }
     }
 

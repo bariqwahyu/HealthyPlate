@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailRecipeActivity">
+    android:background="@drawable/detail_background"
+    tools:context=".ui.detail.DetailRecipeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,11 +15,9 @@
             android:id="@+id/img_recipeDetail"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:contentDescription="@string/img_preview"
-            android:scaleType="center"
+            android:scaleType="fitXY"
+            android:transitionName="image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -26,33 +25,152 @@
 
         <TextView
             android:id="@+id/txt_recipeNameDetail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/txtDetail.title"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:fontFamily="@font/inter_bold"
             android:text="@string/name_recipe"
-            android:textColor="@color/black"
-            android:textSize="24sp"
+            android:transitionName="recipeName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_recipeDetail" />
 
         <TextView
+            android:id="@+id/txt_kalori"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/kalori_recipe"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/txt_recipeNameDetail"
+            app:layout_constraintStart_toStartOf="@+id/txt_recipeNameDetail"
+            app:layout_constraintTop_toBottomOf="@+id/txt_recipeNameDetail" />
+
+        <TextView
+            android:id="@+id/txt_karbohidrat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/karbohidrat"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/txt_kalori"
+            app:layout_constraintTop_toBottomOf="@+id/txt_kalori" />
+
+        <TextView
+            android:id="@+id/txt_protein"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/protein"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/txt_serat"
+            app:layout_constraintStart_toStartOf="@+id/txt_karbohidrat"
+            app:layout_constraintTop_toBottomOf="@+id/txt_karbohidrat" />
+
+        <TextView
+            android:id="@+id/txt_lemak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/lemak"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_karbohidrat"
+            app:layout_constraintEnd_toEndOf="@+id/txt_kalori"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/txt_karbohidrat" />
+
+        <TextView
+            android:id="@+id/txt_serat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/serat"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_protein"
+            app:layout_constraintEnd_toEndOf="@+id/txt_lemak"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/txt_protein" />
+
+        <TextView
+            android:id="@+id/txt_ingredientsTitle"
+            style="@style/txtDetail.desc"
+            android:text="@string/ingredients"
+            app:layout_constraintStart_toStartOf="@+id/txt_protein"
+            app:layout_constraintTop_toBottomOf="@+id/txt_protein" />
+
+        <TextView
+            android:id="@+id/txt_ingredients"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/ingredients_recipe"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_ingredientsTitle" />
+
+        <TextView
+            android:id="@+id/txt_stepDesc"
+            style="@style/txtDetail.desc"
+            android:text="@string/steps"
+            app:layout_constraintStart_toStartOf="@+id/txt_ingredients"
+            app:layout_constraintTop_toBottomOf="@+id/txt_ingredients" />
+
+        <TextView
             android:id="@+id/txt_stepDetail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/inter_medium"
             android:text="@string/recipe_step"
             android:textColor="@color/black"
             android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/txt_ingredients"
+            app:layout_constraintStart_toStartOf="@+id/txt_ingredients"
+            app:layout_constraintTop_toBottomOf="@+id/txt_stepDesc" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="205dp" />
+
+        <RelativeLayout
+            android:id="@+id/progressBarLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/loading_blue"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_recipeNameDetail" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:visibility="visible">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
